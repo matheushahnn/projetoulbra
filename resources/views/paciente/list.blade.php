@@ -1,0 +1,77 @@
+@extends('layouts.app')
+
+@section('content')
+<ol class="breadcrumb">
+  <a href="{{ url( '/home' ) }}">Início /</a>
+  <a class='tela_atual' href="#">{{ $title }}</a>
+</ol>
+<div class="container-fluid form">
+		<div class='row'>
+			<div class="col-md-10">
+				<form method='post' action="{{ route('paciente.search') }}" class='form-horizontal'>
+					{!! csrf_field() !!}
+					<div class="col-md-5">
+						<input type="text" class="form-control" id="busca" name='busca' placeholder="Busca" value="{{ old('busca') }}" />
+					</div>
+					<label for="nome" class="col-sm-2 control-label">Buscar por:</label>
+					<div class="col-sm-3">
+			    	<select class='form-control' name='tipo_busca'>
+			    		<option value='nome'>Nome</option>
+			    		<option value="ficha_atendimento">Ficha Atendimento</option>
+			    		<option value="id">Código</option>
+			    	</select>
+			  	</div>
+					<div class="col-md-2">
+						<button type='submit' class='btn btn-primary pull-right'>
+						<i class='glyphicon glyphicon-search'></i>
+							Buscar
+						</button>
+					</div>
+				</form>
+			</div>
+			<div class="col-md-2">
+				<a href="{{ route('paciente.create') }}" class='btn btn-default btn-add'>
+					<i class='glyphicon glyphicon-plus'></i>
+					Novo
+				</a>
+			</div>
+		</div>
+    <div class="row">
+    	<div class="col-md-12">
+				<table class='table table-striped'>
+					<thead>
+						<tr>
+							<th>Código</th>
+							<th>Nome</th>
+							<th>Data Nascimento</th>
+							<th>Ficha de Atendimento</th>
+							<th width='100px'>Ações</th>
+						</tr>
+					</thead>
+					@forelse($pacientes as $paciente)
+						<tr>
+							<td>{{ $paciente->id }}</td>
+							<td>{{ $paciente->nome }}</td>
+							<td>{{ \Carbon\Carbon::parse( $paciente->dtnasc )->format( 'd/m/Y' ) }}</td>
+							<td>{{ $paciente->ficha_atendimento }}</td>
+							<td>
+								<a href="{{route( "paciente.edit", $paciente->id )}}" class='actions edit'>
+									<span class='glyphicon glyphicon-pencil'></span>
+								</a>
+								<a href='#' class='actions delete'>
+									<span class='glyphicon glyphicon-trash'></span>
+								</a>
+							</td>
+						</tr>				
+					@empty
+						<tr>
+							<td colspan="4">
+								Nenhum paciente cadastrado
+							</td>
+						</tr>
+					@endforelse	
+				</table>
+			</div>
+		</div>
+
+@endsection

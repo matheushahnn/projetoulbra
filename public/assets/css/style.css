@@ -1,0 +1,74 @@
+.espaco_entre_input {
+  margin: 0 0 10px 0;
+}
+
+#app {
+	background: #e3f2fd;
+}
+
+.navbar-default {
+  background-color: #2962ff;
+  border-color: #2962ff;
+}
+
+.breadcrumb {
+  padding: 8px 15px;
+  list-style: none;
+  background: #448aff;
+  border-radius: 0;
+}
+
+.navbar{
+  margin-bottom: 0;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: #eceff1;
+}
+
+a, a:hover {
+    color: #eceff1;
+}
+
+.tela_atual, .tela_atual:hover {
+	text-decoration: none;
+	font-weight: 900;
+}
+
+.actions {
+  padding: 6px;
+  text-decoration: none;
+  margin: 0 2px;
+  color: #000;
+}
+
+.actions:hover{
+	text-decoration: none;
+  color: #000;
+}
+
+.delete {
+}
+
+.edit {
+}
+
+.btn-add {
+	margin-bottom: 10px;
+}
+
+.form {
+	min-height: 550px;
+}
+
+
+/* AGENDA DIA */
+.form-superior {
+	margin: 0 0 15px 0;
+}
+.agenda_dia_profissional tbody td{
+	cursor: pointer;
+}
+.agenda_dia_profissional tbody td:last_child {
+	cursor: initial;
+}
