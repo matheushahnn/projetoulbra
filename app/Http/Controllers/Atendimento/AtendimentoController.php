@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Atendimento;
 use App\Models\ProcedimentoAtendimento;
 use App\Http\Requests\Atendimento\AtendimentoFormRequest;
+use Carbon;
 
 use Illuminate\Support\Facades\DB;
 
@@ -21,7 +22,6 @@ class AtendimentoController extends Controller
     {
         
         $atendimentos = DB::table('atendimentos as a')
-                              ->leftJoin('procedimento_atendimentos as pa', 'pa.id_atendimento', '=', 'a.id')
                               ->leftJoin('pacientes as p', 'p.id', '=', 'a.id_paciente')
                               ->leftJoin('profissionais as prof', 'prof.id', '=', 'a.id_profissional')
                               ->leftJoin('pessoas as p_pac', 'p_pac.id', '=', 'p.id_pessoa')
@@ -44,7 +44,10 @@ class AtendimentoController extends Controller
     {
         $title = "Cadastrar Atendimento";
 
-        return view('atendimento.create-edit', compact('title', 'atendimento'));
+        $data = Carbon\Carbon::now()->format( 'd/m/Y' );
+        $hora = Carbon\Carbon::now()->format( 'h:i' );
+
+        return view('atendimento.create-edit', compact('title', 'atendimento', 'data', 'hora'));
     }
 
     /**
@@ -61,6 +64,7 @@ class AtendimentoController extends Controller
         $dataAtendimento['id_profissional'] = $request->input('id_profissional');
         $dataAtendimento['data'] = $request->input('data');
         $dataAtendimento['hora'] = $request->input('hora');
+        $dataAtendimento['id_agenda_dia'] = $request->input('id_agenda_dia');
         $dataProcedimento = $request->input('procedimento_atendimentos');
 
         // Início commit
@@ -70,9 +74,16 @@ class AtendimentoController extends Controller
         $insertAtendimento = Atendimento::create($dataAtendimento);
         // Insere os procedimentos.
         $atendimento = Atendimento::find($insertAtendimento->id);
-        $insertProcedimento = $atendimento->procedimento()->saveMany(array_map(function ($dataProcedimento) {
-                                    return new ProcedimentoAtendimento($dataProcedimento);
-                                }, $dataProcedimento));
+        // Verifica se existem procedimentos antes de salvá-los.
+        if ( !empty( $dataProcedimento )) {
+            $insertProcedimento = $atendimento
+                                    ->procedimento()
+                                    ->saveMany( array_map( function ($dataProcedimento) {
+                                        return new ProcedimentoAtendimento($dataProcedimento);
+                                    }, $dataProcedimento ) );
+        } else {
+            $insertProcedimento = TRUE;
+        }
 
         DB::commit();
 
@@ -105,7 +116,20 @@ class AtendimentoController extends Controller
      */
     public function edit($id)
     {
-        //
+        
+        $atendimento_query = DB::table('atendimentos AS a')
+                            ->leftJoin('procedimento_atendimentos AS pa', 'pa.id_atendimento', '=', 'a.id')
+                            ->leftJoin('procedimentos AS p', 'p.id', '=', 'pa.id_procedimento')
+                            ->leftJoin('pessoas AS p_pac', 'p_pac.id', '=', 'a.id_paciente')
+                            ->leftJoin('pessoas AS p_prof', 'p_prof.id', '=', 'a.id_profissional')
+                            ->where('a.id', '=', $id);
+
+        $procedimento_list = $atendimento_query->select('p.descricao',  'p.id', 'pa.quantidade', 'pa.observacao')->get();
+        $atendimento       = $atendimento_query->select('a.*', 'p_pac.nome AS nome_paciente', 'p_prof.nome AS nome_profissional')->first();
+
+        $title = "Editando atendimento";
+
+        return view('atendimento.create-edit', compact('title', 'atendimento', 'procedimento_list'));
     }
 
     /**
@@ -117,7 +141,48 @@ class AtendimentoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $dataAtendimento                    = Array();
+        $dataProcedimento                   = Array();
+        $dataAtendimento['id_paciente']     = $request->input('id_paciente');
+        $dataAtendimento['id_profissional'] = $request->input('id_profissional');
+        $dataAtendimento['data']            = $request->input('data');
+        $dataAtendimento['hora']            = $request->input('hora');
+        $dataProcedimento                   = $request->input('procedimento_atendimentos');
+
+        // Início commit
+        DB::beginTransaction();
+
+        // Captura registro do atendimento.
+        $atendimentoUpdate = Atendimento::find($id);
+
+        // Atualiza atendimento.
+        $updateAtendimento = $atendimentoUpdate->update($dataAtendimento);
+
+        // Remove todos os procedimentos que possuem vínculo.
+        $procedimentos_atendimento = ProcedimentoAtendimento::where('id_atendimento', '=', $id);
+        $procedimentos_atendimento->delete();
+
+        // Insere os procedimentos.
+        $atendimento = Atendimento::find($id);
+        // Verifica se existem procedimentos antes de salvá-los.
+        if ( !empty( $dataProcedimento )) {
+            $insertProcedimento = $atendimento
+                                    ->procedimento()
+                                    ->saveMany( array_map( function ($dataProcedimento) {
+                                        return new ProcedimentoAtendimento($dataProcedimento);
+                                    }, $dataProcedimento ) );
+        } else {
+            $insertProcedimento = TRUE;
+        }
+
+        DB::commit();
+
+
+        if ( $insertProcedimento ) {
+            return redirect()->route('atendimento.index');
+        } else {
+            return redirect()->route('atendimento.create');
+        }
     }
 
     /**
@@ -128,6 +193,21 @@ class AtendimentoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+        $atendimento = Atendimento::find($id);
+
+        $delete = $atendimento->delete();
+
+        if ( $delete ) {
+
+            return redirect()->route('atendimento.index', $id);
+
+        } else {
+
+            return redirect()->route('atendimento.index', $id)->with('Falha ao excluir atendimento.');
+
+        }
+
+
     }
 }

@@ -30,6 +30,7 @@ Route::group(['namespace' => 'Agendas','prefix' => 'agenda', 'middleware' => 'au
 	});
 
 	// Agenda do dia.
+	Route::get('/agenda_dia/iniciar_atendimento/{id_agendamento}', 'AgendaDiaController@iniciarAtendimento')->name('agenda_dia.iniciar_atendimento');
 	Route::post('/agenda_dia/busca_agenda', 'AgendaDiaController@busca_agenda')->name('agenda_dia.busca_agenda');
 	Route::post('/agenda_dia/create', 'AgendaDiaController@create')->name('agenda_dia.create');
 	Route::resource('/agenda_dia', 'AgendaDiaController');

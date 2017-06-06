@@ -22,7 +22,10 @@
 				<label class='col-sm-1 control-label'>Profissional</label>
 				<div class='col-sm-3'>
 					<input type='text' class="form-control autocomplete-profissional" name='profissional' id='profissional' placeholder="Profissional" value='' />
-					<input type='hidden' class='codigo_profissional_autocomplete' name='id_profissional' id='id_profissional' />
+				</div>
+				<label class='col-sm-1 control-label'>Códigio</label>
+				<div class='col-sm-1'>
+					<input type='text' class='form-control codigo_profissional_autocomplete' name='id_profissional' id='id_profissional' readonly="readonly"/>
 				</div>
 			</form>
 		</div>

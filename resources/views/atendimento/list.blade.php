@@ -64,12 +64,16 @@
 						<td>{{ \Carbon\Carbon::parse($atendimento->data)->format( 'd/m/Y' ) }}</td>
 						<td>{{ substr($atendimento->hora,0, -3) }}</td>
 						<td>
-							<a href="{{route( "atendimento.edit", $atendimento->id )}}" class='actions edit'>
-								<span class='glyphicon glyphicon-pencil'></span>
-							</a>
-							<a href='#' class='actions delete'>
-								<span class='glyphicon glyphicon-trash'></span>
-							</a>
+							<form method='post' action="{{ route('atendimento.destroy', $atendimento->id) }}">
+						  	{!! method_field('DELETE') !!}
+						  	{!! csrf_field() !!}
+								<a href="{{route( "atendimento.edit", $atendimento->id )}}" class='actions edit'>
+									<span class='glyphicon glyphicon-pencil'></span>
+								</a>
+								<button button='submit' class='btn-delete'>
+									<span class='glyphicon glyphicon-trash'></span>
+								</button>
+							</form>
 						</td>
 					</tr>					
 					@endforeach

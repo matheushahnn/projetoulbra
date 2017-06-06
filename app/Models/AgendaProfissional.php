@@ -20,8 +20,14 @@ class AgendaProfissional extends Model
 	protected $guarded = []; #Campos que não podem ser preenchido pelo usuário (formulário).
 
 
-	public function profissional() {
-		 return $this->hasManyThrough('App\Models\Pessoa', 'App\Models\Profissional');
+	public function profissional() 
+	{
+		 return $this->belongsTo('App\Models\Profissional', 'id_profissional');
+	}
+
+	public function agendaDia() 
+	{
+    return $this->hasOne('App\Models\AgendaDia', 'id_agenda_profissional');
 	}
 
 }

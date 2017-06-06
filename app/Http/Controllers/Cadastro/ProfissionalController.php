@@ -57,7 +57,9 @@ class ProfissionalController extends Controller
 
             }
 
-            return view('profissional.list', compact('profissionais'))->withErrors($validator);; 
+            $title = "Listagem de profissionais";
+
+            return view('profissional.list', compact('profissionais', 'title'))->withErrors($validator);; 
 
         }
 

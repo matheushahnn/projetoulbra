@@ -30,9 +30,9 @@ $( document ).ready(function() {
           	// Insere a agenda do dia no espaço apropriado.
           	$horario_agenda.html( response );
 
-          	// Click no horário para inserir agendamento.	
+            // Click no horário para inserir agendamento.	
 						// Click em algum horário da agenda do dia.
-						$horario_agenda.find(" .horario_agenda" ).click( function() {
+						$horario_agenda.find( ".horario_agenda td:not(.funcoes)" ).click( function() {
 				    		
 								var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
@@ -117,8 +117,19 @@ $( document ).ready(function() {
 
     });
 
-    // Adicionar Procedimento.
+    // content do atendimento.
   	var $content_atendimento = $( '#create_atendimento' );
+
+    /*
+     * Remover procedimento.
+     */
+    // Click no ícone da lixeira.
+    $content_atendimento.on( 'click', '.remover_procedimento', function() {
+      // Remove linha do registro do procedimento.
+      $( this ).closest( 'tr' ).remove();
+    });
+
+    // Adicionar Procedimento.
     $content_atendimento.find( "#btn_adicionar_procedimento" ).click( function() {
       
       var id_procedimento = $content_atendimento.find( '#id_procedimento' ).val();
@@ -126,6 +137,19 @@ $( document ).ready(function() {
     	var quantidade = $content_atendimento.find( '#quantidade' ).val();
     	var obs_procedimento = $content_atendimento.find( '#observacao_procedimento' ).val();
     	
+      // Validações.
+      // Verifica se procedimento foi informado.
+      if ( !id_procedimento ) {
+        alerta('É necessário informar um procedimento válido.');
+        return false;
+      }
+
+      // Verifica se quantidade foi informada.
+      if ( !quantidade ) {
+        alerta("É necessário informar a quantidade de procedimentos realizados.");
+        return false;
+      }
+
     	// Limpa campos procedimento.
     	$content_atendimento.find( '#procedimento, #id_procedimento, #observacao_procedimento, #quantidade' ).val('');
 
@@ -141,13 +165,19 @@ $( document ).ready(function() {
     	    html +=     '<input type="hidden" name="procedimento_atendimentos['+i+'][quantidade]" value="'+quantidade+'" />';
     	    html +=     quantidade;
     	    html +=   '</td>';
-    	    html +=   '<td>';
-    	    html +=     '<input type="hidden" name="procedimento_atendimentos['+i+'][observacao]" value="'+obs_procedimento+'"/>';
-    	    html +=     obs_procedimento;
-    	    html +=   '</td>';
-    	    html += '</tr>';
+          html +=   '<td>';
+          html +=     '<input type="hidden" name="procedimento_atendimentos['+i+'][observacao]" value="'+obs_procedimento+'"/>';
+          html +=     obs_procedimento;
+          html +=   '</td>';
+          html +=   '<td>';
+          html +=     '<span title="Remover procedimento" class="pointer text-center remover_procedimento glyphicon glyphicon-trash"></span>';
+          html +=   '</td>';
+          html += '</tr>';
 
     	$content_atendimento.find( '#tabela_procedimentos_atendimento' ).append( html );
+
+      // Quantidade continua como 1.
+      $content_atendimento.find( '#quantidade' ).val( 1 );
 
     });
 

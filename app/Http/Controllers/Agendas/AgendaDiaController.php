@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Agendas;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\AgendaDia;
+use App\Models\Pessoa;
 use App\Models\AgendaProfissional;
 use App\Http\Requests\Agendas\AgendaDiaRequest;
 use App\Http\Requests\Agendas\AgendaDiaFormRequest;
@@ -39,6 +40,35 @@ class AgendaDiaController extends Controller
 
     }
 
+    public function iniciarAtendimento($id_agendamento) 
+    {
+
+        $agendaDia    = AgendaDia::find($id_agendamento);
+        $paciente     = $agendaDia->paciente()->first();
+        $profissional = $agendaDia->agendaProfissional()->first()->profissional()->first();
+        $nomeProfissional = $profissional->pessoa()->first()->nome;
+        $nomePaciente = $paciente->pessoa()->first()->nome;
+
+        $data_agenda  = $agendaDia->data;
+        $hora_agenda  = $agendaDia->hora;
+
+        $title = "Iniciar atendimento da agenda";
+
+        // Muda os status do agendamento.
+        $dataAgendaDia = Array(
+            'status' => 1
+        );
+        $agendaDia->update($dataAgendaDia);
+
+        return view('atendimento.create-edit', compact(
+                                                    'title', 'agendaDia', 'atendimento', 
+                                                    'agendaDia', 'nomePaciente' ,'nomeProfissional',
+                                                    'paciente', 'profissional'
+                                                ));
+
+
+    }
+
     public function busca_agenda(Request $request) {
 
         $dia             = $request->dia_selecionado;
@@ -65,6 +95,7 @@ class AgendaDiaController extends Controller
             $agendados = DB::table('agenda_dias AS ad')
                  ->leftJoin('pacientes AS p', 'p.id', '=', 'ad.id_paciente')
                  ->leftJoin('agenda_profissionais AS ag_prof', 'ag_prof.id', '=', 'ad.id_agenda_profissional')
+                 ->leftJoin('atendimentos AS at', 'at.id_agenda_dia', '=', 'ad.id')
                  ->leftJoin('profissionais AS prof', 'prof.id', '=', 'ag_prof.id_profissional')
                  ->leftJoin('pessoas AS p_pac', 'p_pac.id', '=', 'p.id_pessoa')
                  ->leftJoin('pessoas AS p_prof', 'p_prof.id', '=', 'prof.id_pessoa')
@@ -78,9 +109,11 @@ class AgendaDiaController extends Controller
                     "), 
                     'p_prof.nome AS nome_profissional', 
                     'p_pac.nome AS nome_paciente', 
-                    "ad.hora"
+                    "ad.hora",
+                    'at.id AS id_atendimento'
                  )
                  ->where('ag_prof.id', '=', $id_agenda_profissional)
+                 ->where('ad.data', '=', "'$dia'")
                  ->orderby('ad.hora')
                  ->get();
 
@@ -99,25 +132,18 @@ class AgendaDiaController extends Controller
 
                     // Verifica se hora da agenda do profissional é a mesma que a agenda do dia.
                     if ( $hora_formatada == $horaControle ) {
-
-                        $horarios[$i] = $this->_cria_horario( $hora_formatada, $agendado->id_agenda_dia, $agendado->nome_paciente, $agendado->nome_profissional, $agendado->status, $agendado->observacao );
+                        
+                        $horarios[$i] = $this->_cria_horario( $hora_formatada, $agendado->id_agenda_dia, $agendado->nome_paciente, $agendado->nome_profissional, $agendado->status, $agendado->observacao, $agendado->id_atendimento );
 
                     }
 
                 }
-
-                // var_dump($agenda->hora_final);
-                // var_dump($horaControle);
 
                 // Somo 5 minutos (resultado em int)
                 $horaControle = strtotime("$horaControle + $agenda->duracao minutes");
                 $horaControle = date("H:i", $horaControle);
 
                 $i++;
-
-                // var_dump('horaControle');
-                // var_dump($horaControle);
-                // Formato o resultado
 
             }
 
@@ -130,7 +156,7 @@ class AgendaDiaController extends Controller
     /**
      * Cria o array com os dados do horário.
      */
-    private function _cria_horario( $hora = '', $id_agenda_dia = '', $nome_paciente = '', $nome_profissional = '', $status = '', $observacao = '' ) {
+    private function _cria_horario( $hora = '', $id_agenda_dia = '', $nome_paciente = '', $nome_profissional = '', $status = '', $observacao = '', $id_atendimento = '' ) {
 
         $horario = Array(
             'id_agenda_dia'     => $id_agenda_dia,
@@ -139,6 +165,7 @@ class AgendaDiaController extends Controller
             'nome_profissional' => $nome_profissional,
             'hora'              => $hora,
             'observacao'        => $observacao,
+            'id_atendimento'    => $id_atendimento
         );
 
         return $horario;

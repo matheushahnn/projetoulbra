@@ -9,6 +9,7 @@ use App\Models\Pessoa;
 use App\Http\Requests\Cadastro\PacienteFormRequest;
 use App\Http\Requests\Cadastro\PessoaFormRequest;
 use Illuminate\Support\Facades\DB;
+use Validator;
 
 
 class PacienteController extends Controller
@@ -83,6 +84,7 @@ class PacienteController extends Controller
 
         return view('paciente.list', compact('title', 'pacientes'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -189,7 +191,7 @@ class PacienteController extends Controller
 
         // Recupera o item para editar.
         $paciente = $this->paciente->find($id);
-        $pessoa = $this->pessoa->find($paciente->id_pessoa);
+        $pessoa   = $this->pessoa->find($paciente->id_pessoa);
 
         // Altera pessoa.
         $updatePessoa = $pessoa->update($dataForm);
@@ -200,7 +202,7 @@ class PacienteController extends Controller
         if ( $update ) {
             return redirect()->route('paciente.index');
         } else {
-            return redirect()->route('paciente.edit', $id)->with('Falha ao editar.');
+            return redirect()->route('paciente.edit', $id)->with('Falha ao editar paciente.');
         }
     }
 
@@ -212,7 +214,31 @@ class PacienteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
+        // Verifica se paciente está em algum atendimento.
+        $count_atendimento = DB::table('atendimentos AS a')
+                                ->leftJoin('pacientes AS pac', 'pac.id', '=', 'a.id_paciente')
+                                ->where('pac.id', '=', $id)
+                                ->count();
+
+        if ( $count_atendimento > 0 ) {
+            return redirect()->route('paciente.index')->withErrors(['msg'=>'Paciente possui atendimentos.']);
+        }
+
+        $paciente = Paciente::find($id);
+
+        $delete = $paciente->delete();
+
+        if ( $delete ) {
+
+            return redirect()->route('paciente.index');
+
+        } else {
+            
+            return redirect()->route('paciente.index', $id)->with('Falha ao excluir paciente.');
+
+        }
+
     }
 
     public function buscaAutocomplete(Request $request) {

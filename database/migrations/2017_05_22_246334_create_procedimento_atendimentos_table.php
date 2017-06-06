@@ -19,7 +19,7 @@ class CreateProcedimentoAtendimentosTable extends Migration
             $table->integer('id_procedimento');
             $table->integer('quantidade');
             $table->text('observacao');
-            $table->foreign('id_atendimento')->references('id')->on('atendimentos');
+            $table->foreign('id_atendimento')->references('id')->on('atendimentos')->onDelete('cascade');
             $table->foreign('id_procedimento')->references('id')->on('procedimentos');
             $table->timestamps();
         });

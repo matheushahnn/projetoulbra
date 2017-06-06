@@ -23,7 +23,7 @@ class CreateAtendimentosTable extends Migration
             $table->timestamps();
             $table->foreign('id_paciente')->references('id')->on('pacientes');
             $table->foreign('id_profissional')->references('id')->on('profissionais');
-            $table->foreign('id_agenda_dia')->references('id')->on('agenda_dias');
+            $table->foreign('id_agenda_dia')->references('id')->on('agenda_dias')->onDelete('cascade');
         });
     }
 

@@ -13,4 +13,14 @@ class Pessoa extends Model
 	];    
 	protected $guarded = []; #Campos que não podem ser preenchido pelo usuário (formulário).
 
+  public function paciente()
+  {
+      return $this->hasOne('App\Models\Paciente', 'id_pessoa', 'id');
+  }
+
+  public function profissional()
+  {
+      return $this->hasOne('App\Models\Profissional', 'id_profissional', 'id');
+  }
+
 }

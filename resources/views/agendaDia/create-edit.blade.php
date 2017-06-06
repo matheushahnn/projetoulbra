@@ -26,29 +26,30 @@
   <input type='hidden' value='{{ $agendaDia['hora_selecionada'] }}' name='hora'/>
   <input type='hidden' value='{{ $agendaDia['dia_selecionado'] }}' name='data'/>
 
-  <div class='row'>
-    <div class='col-sm-12'>
+    <div class="form-group">
       <p> <b>Profissional: </b> {{ $agendaDia['nome_profissional'] or old( 'nome_profissional' ) }}</p>
+    </div>
+    <div class="form-group">
+      <div class='col-sm-6 '>
+        <p> <b>Hora: </b> {{ $agendaDia['hora_selecionada'] }}</p>
+      </div>    
+      <div class='col-sm-6'>
+        <p> <b>Data: </b> {{ $agendaDia['dia_selecionado'] }}</p>
+      </div>    
     </div>    
-  </div>
-  <div class='row'>
-    <div class='col-sm-6'>
-      <p> <b>Hora: </b> {{ $agendaDia['hora_selecionada'] }}</p>
-    </div>    
-    <div class='col-sm-6'>
-      <p> <b>Data: </b> {{ $agendaDia['dia_selecionado'] }}</p>
-    </div>    
-  </div>
 	<div class="form-group">
-    <label for="id_paciente" class="col-sm-2 control-label">Paciente</label>
-    <div class="col-sm-9">
+    <label for="paciente" class="col-sm-2 control-label">Paciente</label>
+    <div class="col-sm-2">
       <input type="text" class="form-control autocomplete-paciente" id="paciente" name='paciente' placeholder="Paciente" value="{{ old('paciente') }}" />
-    	<input type='hidden' class='codigo_paciente_autocomplete' name='id_paciente' id='id_paciente' value="{{ $agendaDia['id_paciente'] or old('id_paciente') }}" />
-  	</div>
+    </div>
+    <label for="paciente" class="col-sm-1 control-label">Código</label>
+    <div class="col-sm-1">
+      <input type='text' class='form-control codigo_paciente_autocomplete' name='id_paciente' id='id_paciente' value="{{ $agendaDia['id_paciente'] or old('id_paciente') }}"  readonly="readonly"/>
+    </div>
   </div>
   <div class="form-group">
     <label class="col-sm-2 control-label" for="observacao">Observação</label>
-    <div class='col-sm-9'>
+    <div class='col-sm-7'>
     	<textarea class="form-control" id="observacao" name='observacao' placeholder="Observação">{{ $agendaDia['observacao'] or old('observacao') }}</textarea>
   	</div>
   </div>

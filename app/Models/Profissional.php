@@ -20,8 +20,12 @@ class Profissional extends Model
    */
   public function pessoa()
   {
-	// Cria vinculo com tabela de pessoas. Inverso de hasOne();
-      return $this->belongsTo('App\Models\Pessoa', 'id_pessoa');
+		// Cria vinculo com tabela de pessoas. Inverso de hasOne();
+    return $this->belongsTo('App\Models\Pessoa', 'id_pessoa');
+  }
+  public function agendadia()
+  {
+    return $this->hasOne('App\Models\AgendaDia', 'id_profissional');
   }
 
 }

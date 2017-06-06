@@ -9,6 +9,7 @@ class Atendimento extends Model
 	protected $fillable = [
 		'id_paciente', 
 		'id_profissional',
+		'id_agenda_dia',
 		'data', 
 		'hora', 
 	];    

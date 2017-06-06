@@ -47,10 +47,19 @@ a, a:hover {
   color: #000;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 .delete {
 }
 
 .edit {
+}
+
+.btn-delete {
+  background: none;
+  border: none;
 }
 
 .btn-add {

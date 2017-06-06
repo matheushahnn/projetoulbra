@@ -62,12 +62,16 @@
 						<td>{{ $profissional->nome }}</td>
 						<td>{{ $profissional->codigo_cadastro }}</td>
 						<td>
+						<form method='post' action="{{ route('profissional.destroy', $profissional->id) }}">
+					  	{!! method_field('DELETE') !!}
+					  	{!! csrf_field() !!}
 							<a href="{{route( "profissional.edit", $profissional->id )}}" class='actions edit'>
 								<span class='glyphicon glyphicon-pencil'></span>
 							</a>
-							<a href='#' class='actions delete'>
+							<button type='submit' class='btn-delete'>
 								<span class='glyphicon glyphicon-trash'></span>
-							</a>
+							</button>
+						</form>
 						</td>
 					</tr>					
 					@endforeach

@@ -6,6 +6,16 @@
   <a class='tela_atual' href="#">{{ $title }}</a>
 </ol>
 <div class="container-fluid form">
+
+  @if( isset($errors) && count( $errors ) > 0 )
+    <div class='alert alert-danger'>
+      @foreach( $errors->all() as $erro )
+
+        <p>{{ $erro }}</p>
+
+      @endforeach
+    </div>
+  @endif
 		<div class='row'>
 			<div class="col-md-10">
 				<form method='post' action="{{ route('paciente.search') }}" class='form-horizontal'>
@@ -55,12 +65,16 @@
 							<td>{{ \Carbon\Carbon::parse( $paciente->dtnasc )->format( 'd/m/Y' ) }}</td>
 							<td>{{ $paciente->ficha_atendimento }}</td>
 							<td>
-								<a href="{{route( "paciente.edit", $paciente->id )}}" class='actions edit'>
-									<span class='glyphicon glyphicon-pencil'></span>
-								</a>
-								<a href='#' class='actions delete'>
-									<span class='glyphicon glyphicon-trash'></span>
-								</a>
+								<form method='post' action="{{ route('paciente.destroy', $paciente->id) }}">
+							  	{!! method_field('DELETE') !!}
+							  	{!! csrf_field() !!}
+									<a href="{{route( "paciente.edit", $paciente->id )}}" class='actions edit'>
+										<span class='glyphicon glyphicon-pencil'></span>
+									</a>
+									<button type='submit' class='btn-delete'>
+										<span class='glyphicon glyphicon-trash'></span>
+									</button>
+								</form>
 							</td>
 						</tr>				
 					@empty
@@ -70,6 +84,8 @@
 							</td>
 						</tr>
 					@endforelse	
+					<tfoot>
+					</tfoot>
 				</table>
 			</div>
 		</div>
