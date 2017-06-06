@@ -21,5 +21,9 @@ class Atendimento extends Model
 	{
 	    return $this->hasMany('App\Models\ProcedimentoAtendimento', 'id_atendimento');
 	}
+	public function profissional()
+	{
+	    return $this->hasOne('App\Models\Profissional', 'id_profissional');
+	}
 
 }

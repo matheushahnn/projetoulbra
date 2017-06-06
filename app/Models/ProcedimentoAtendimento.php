@@ -17,7 +17,7 @@ class ProcedimentoAtendimento extends Model
 	protected $guarded = []; #Campos que não podem ser preenchido pelo usuário (formulário).
 
 
-	public function procedimento()
+	public function atendimento()
 	{
 	    return $this->belongsTo('App\Models\Atendimento', 'id_procedimento');
 	}

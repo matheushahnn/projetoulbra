@@ -14,4 +14,10 @@ class Procedimento extends Model
 	];    
 	protected $guarded = []; #Campos que não podem ser preenchido pelo usuário (formulário).
 
+	public function procedimentoAtendimento()
+	{
+	    return $this->hasOne('App\Models\ProcedimentoAtendimento', 'id_procedimento');
+	}
+
+
 }

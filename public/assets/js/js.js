@@ -68,10 +68,6 @@ $( document ).ready(function() {
     	},
 		);
 
-
-
-
-
     $( ".campo_data, #datepicker_agenda" ).datepicker();
     $( '.campo_data, #datepicker_agenda' ).datepicker( 'option',  );
     // Agenda inline.
@@ -140,13 +136,13 @@ $( document ).ready(function() {
       // Validações.
       // Verifica se procedimento foi informado.
       if ( !id_procedimento ) {
-        alerta('É necessário informar um procedimento válido.');
+        alert('É necessário informar um procedimento válido.');
         return false;
       }
 
       // Verifica se quantidade foi informada.
       if ( !quantidade ) {
-        alerta("É necessário informar a quantidade de procedimentos realizados.");
+        alert("É necessário informar a quantidade de procedimentos realizados.");
         return false;
       }
 

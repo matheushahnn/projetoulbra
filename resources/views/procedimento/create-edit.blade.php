@@ -6,7 +6,7 @@
   <a href="{{ route( 'procedimento.index' ) }}">Lista de procedimentos /</a>
   <a class='tela_atual' href="#">{{ $title }}</a>
 </ol>
-<div class="container form">
+<div class="container-fluid form">
 
 @if ( isset( $procedimento ) )
 	<form method='post' action="{{ route('procedimento.update', $procedimento->id) }}" class='form-horizontal'>

@@ -129,24 +129,11 @@ class PacienteController extends Controller
         DB::commit();
 
         if ( $insert ) {
-            return redirect()->route('paciente.index');
+            return redirect()->route('paciente.index')->with('status', 'Paciente criado com sucesso!');
         } else {
-            return redirect()->route('paciente.create');
+            return redirect()->route('paciente.create')->withErrors(['msg' => 'Falha ao remover paciente!']);
         }
 
-
-
-
-        // Pega os dados para preencher a tabela pessoas.
-        $dataForm = $request->all();
-        
-        $insert = $this->paciente->create($dataForm);
-
-        if ( $insert ) {
-            return redirect()->route('paciente.index');
-        } else {
-            return redirect()->route('paciente.create');
-        }
     }
 
     /**
@@ -200,9 +187,9 @@ class PacienteController extends Controller
 
         // Verifica se editou.
         if ( $update ) {
-            return redirect()->route('paciente.index');
+            return redirect()->route('paciente.index')->with('status', 'Paciente editado com sucesso!');
         } else {
-            return redirect()->route('paciente.edit', $id)->with('Falha ao editar paciente.');
+            return redirect()->route('paciente.edit', $id)->withErrors(['msg' => 'Falha ao editar paciente!']);
         }
     }
 
@@ -222,7 +209,7 @@ class PacienteController extends Controller
                                 ->count();
 
         if ( $count_atendimento > 0 ) {
-            return redirect()->route('paciente.index')->withErrors(['msg'=>'Paciente possui atendimentos.']);
+            return redirect()->route('paciente.index')->withErrors(['msg'=>'Paciente não pode ser deletado, possui atendimentos/agendamentos. Favor remover os vínculos antes de realizar esta operação.']);
         }
 
         $paciente = Paciente::find($id);
@@ -231,11 +218,11 @@ class PacienteController extends Controller
 
         if ( $delete ) {
 
-            return redirect()->route('paciente.index');
+            return redirect()->route('paciente.index')->with('status', 'Paciente removido com sucesso!');
 
         } else {
             
-            return redirect()->route('paciente.index', $id)->with('Falha ao excluir paciente.');
+            return redirect()->route('paciente.index', $id)->withErrors(['msg' => 'Falha ao excluir paciente!']);
 
         }
 

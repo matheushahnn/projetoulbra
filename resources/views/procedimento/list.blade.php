@@ -62,12 +62,16 @@
 						<td>{{ $procedimento->descricao }}</td>
 						<td>{{ $procedimento->observacao }}</td>
 						<td>
-							<a href="{{route( "procedimento.edit", $procedimento->id )}}" class='actions edit'>
-								<span class='glyphicon glyphicon-pencil'></span>
-							</a>
-							<a href='#' class='actions delete'>
-								<span class='glyphicon glyphicon-trash'></span>
-							</a>
+							<form method='post' action="{{ route('procedimento.destroy', $procedimento->id) }}">
+						  	{!! method_field('DELETE') !!}
+						  	{!! csrf_field() !!}
+								<a href="{{route( "procedimento.edit", $procedimento->id )}}" class='actions edit'>
+									<span class='glyphicon glyphicon-pencil'></span>
+								</a>
+								<button type='submit' class='btn-delete'>
+									<span class='glyphicon glyphicon-trash'></span>
+								</button>
+							</form>
 						</td>
 					</tr>					
 					@endforeach

@@ -39,6 +39,7 @@ class ProcedimentoController extends Controller
 
         $data = $request->all();
         $validator = NULL;
+        $title = 'Listagem de procedimentos';
 
         if ( empty( $data['descricao_busca'] ) ) {
             
@@ -60,7 +61,7 @@ class ProcedimentoController extends Controller
 
             }
 
-            return view('procedimento.list', compact('procedimentos'))->withErrors($validator);; 
+            return view('procedimento.list', compact('procedimentos', 'title'))->withErrors($validator);; 
 
         }
 
@@ -94,9 +95,9 @@ class ProcedimentoController extends Controller
         $insert = $this->procedimento->create($dataForm);
 
         if ( $insert ) {
-            return redirect()->route('procedimento.index');
+            return redirect()->route('procedimento.index')->with('status', 'Procedimento criado com sucesso!');
         } else {
-            return redirect()->route('procedimento.create');
+            return redirect()->route('procedimento.create')->withErrors(['msg' => 'Falha ao remover procedimento!']);
         }
 
     }
@@ -148,9 +149,9 @@ class ProcedimentoController extends Controller
 
         // Verifica se editou.
         if ( $update ) {
-            return redirect()->route('procedimento.index');
+            return redirect()->route('procedimento.index')->with('status', 'Procedimento editado com sucesso!');
         } else {
-            return redirect()->route('procedimento.edit', $id)->with('Falha ao editar.');
+            return redirect()->route('procedimento.edit', $id)->withErrors(['msg' => 'Falha ao editar procedimento!']);
         }
     }
 
@@ -162,7 +163,28 @@ class ProcedimentoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Verifica se procedimento está em algum atendimento.
+        $procedimento = Procedimento::find($id);
+
+        $procedimentoAtendimento = $procedimento->procedimentoAtendimento()->first();
+
+        if ( isset( $procedimentoAtendimento ) ) {
+            return redirect()->route('procedimento.index')->withErrors(['msg'=>'Procedimento não pode ser deletado, está inserido em um atendimento. Favor remover os vínculos antes de realizar esta operação.']);
+        }
+
+
+        $delete = $procedimento->delete();
+
+        if ( $delete ) {
+
+            return redirect()->route('procedimento.index')->with('status', 'Procedimento removido com sucesso!');
+
+        } else {
+            
+            return redirect()->route('procedimento.index', $id)->withErrors(['msg' => 'Falha ao excluir procedimento!']);
+
+        }
+
     }
 
 

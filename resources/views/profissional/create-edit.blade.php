@@ -6,8 +6,7 @@
   <a href="{{ route( 'profissional.index' ) }}">Lista de profissionais /</a>
   <a class='tela_atual' href="#">{{ $title }}</a>
 </ol>
-<div class="container">
-  <h1> {{ $title }} </h1>
+<div class="container-fluid form">
   @if ( isset( $profissional ) )
     <form method='post' action="{{ route('profissional.update', $profissional->id) }}" class='form-horizontal'>
 

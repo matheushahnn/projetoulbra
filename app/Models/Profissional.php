@@ -27,5 +27,13 @@ class Profissional extends Model
   {
     return $this->hasOne('App\Models\AgendaDia', 'id_profissional');
   }
+  public function agendaProfissional()
+  {
+    return $this->hasOne('App\Models\AgendaProfissional', 'id_profissional');
+  }
+  public function atendimento()
+  {
+    return $this->hasOne('App\Models\Atendimento', 'id_profissional');
+  }
 
 }

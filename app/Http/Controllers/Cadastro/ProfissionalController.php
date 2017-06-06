@@ -122,9 +122,9 @@ class ProfissionalController extends Controller
         DB::commit();
 
         if ( $insert ) {
-            return redirect()->route('profissional.index');
+            return redirect()->route('profissional.index')->with('status', 'Profissional criado com sucesso!');
         } else {
-            return redirect()->route('profissional.create');
+            return redirect()->route('profissional.create')->withErrors(['msg' => 'Falha ao remover profissional!']);
         }
     }
 
@@ -183,9 +183,9 @@ class ProfissionalController extends Controller
 
         // Verifica se editou.
         if ( $updateProfissional && $updatePessoa ) {
-            return redirect()->route('profissional.index');
+            return redirect()->route('profissional.index')->with('status', 'Profissional editado com sucesso!');;
         } else {
-            return redirect()->route('profissional.edit', $id)->with('Falha ao editar.');
+            return redirect()->route('profissional.edit', $id)->withErrors(['msg' => 'Falha ao editar profissional!']);
         }
     }
 
@@ -220,6 +220,32 @@ class ProfissionalController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $profissional = Profissional::find($id);
+
+        // Verifica se profissional está em algum atendimento.
+        $atendimento = $profissional->atendimento()->first();
+
+        if ( isset( $atendimento ) ) {
+            return redirect()->route('profissional.index')->withErrors(['msg'=>'Profissional não pode ser deletado, possui atendimentos. Favor remover os vínculos antes de realizar esta operação.']);
+        }
+        // Verifica se profissional possui alguma agenda.
+        $agendaProfissionais = $profissional->agendaProfissional()->first();
+
+        if ( isset( $agendaProfissionais ) ) {
+            return redirect()->route('profissional.index')->withErrors(['msg'=>'Profissional não pode ser deletado, possui agenda. Favor remover os vínculos antes de realizar esta operação.']);
+        }
+
+        // Deleta Profissional.
+        $delete = $profissional->delete();
+
+        if ( $delete ) {
+
+            return redirect()->route('profissional.index')->with('status', 'Profissional removido com sucesso!');
+
+        } else {
+            
+            return redirect()->route('profissional.index', $id)->withErrors(['msg' => 'Falha ao excluir profissional!']);
+
+        }
     }
 }

@@ -30,4 +30,12 @@ class PacienteFormRequest extends FormRequest
         ];
     }
 
+    public function messages()
+    {
+        return [
+            'dtnasc.required' => 'O campo data nascimento é obrigatório.',
+            'dtnasc.data_format' => "O campo data nascimento deve ser no formato 'DD/MM/AAAA'",
+        ];
+    }
+
 }
