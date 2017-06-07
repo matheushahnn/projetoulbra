@@ -64,8 +64,7 @@ $( document ).ready(function() {
 
           }
       	});
-    	},
-		);
+  	});
 
     $( ".campo_data, #datepicker_agenda" ).datepicker();
     $( '.campo_data, #datepicker_agenda' ).datepicker( 'option',  );
