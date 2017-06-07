@@ -151,13 +151,13 @@ class AgendaProfissionalController extends Controller
 
         $dataPost = $request->all();
 
-        // Salva pessoa
+        // Salva agendaprofissional
         $insert = $this->agendaProfissional->create($dataPost);
         
         if ( $insert ) {
-            return redirect()->route('agenda_profissional.index');
+            return redirect()->route('agenda_profissional.index')->with('status', 'Agenda do profissional criado com sucesso!');
         } else {
-            return redirect()->route('agenda_profissional.create');
+            return redirect()->route('agenda_profissional.create')->withErrors(['msg' => 'Falha ao criar agenda profissional!']);
         }
 
     }
