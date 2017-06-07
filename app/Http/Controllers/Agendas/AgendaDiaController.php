@@ -207,9 +207,9 @@ class AgendaDiaController extends Controller
         $insert = $this->agendaDia->create($data);
 
         if ( $insert ) {
-            return redirect()->route('agenda_dia.index');
+            return redirect()->route('agenda_dia.index')->with('status', 'Agendamento criado com sucesso!');
         } else {
-            return redirect()->route('agenda_dia.create');
+            return redirect()->route('agenda_dia.create')->withErrors(['msg' => 'Falha ao criar agendamento!']);
         }
     }
 
@@ -255,6 +255,19 @@ class AgendaDiaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $agendaDia = agendaDia::find($id);
+
+        // Deleta agendaDia.
+        $delete = $agendaDia->delete();
+
+        if ( $delete ) {
+
+            return redirect()->route('agenda_dia.index')->with('status', 'Agendamento removido com sucesso!');
+
+        } else {
+            
+            return redirect()->route('agenda_dia.index', $id)->withErrors(['msg' => 'Falha ao excluir agendamento!']);
+
+        }
     }
 }

@@ -33,4 +33,12 @@ class AgendaProfissionalFormRequest extends FormRequest
             'duracao'            => 'required|numeric',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'id_profissional'   => "O campo profissional é obrigatório",
+        ];
+    }
+
 }

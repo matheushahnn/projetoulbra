@@ -30,10 +30,13 @@
   	<div class="form-group">
   	<div class="form-group">
       <label for="profissional" class="col-sm-2 control-label">Profissional</label>
-      <div class="col-sm-9">
-      	<input type="text" class="form-control autocomplete-profissional" id="profissional" name='profissional' placeholder="Descrição" value="{{ $profissional->pessoa->nome or old('profissional') }}" />
-        <input type='hidden' class='codigo_profissional_autocomplete' name='id_profissional' id='id_profissional' value="{{ $agenda_profissional->id_profissional or old('id_profissional') }}"/>
-    	</div>
+      <div class="col-sm-4">
+        <input type="text" class="form-control autocomplete-profissional" id="profissional" name='profissional' placeholder="Descrição" value="{{ $profissional->pessoa->nome or old('profissional') }}" />
+      </div>
+      <label for="profissional" class="col-sm-1 control-label">Código</label>
+      <div class="col-sm-1">
+        <input type='text' class='form-control codigo_profissional_autocomplete' name='id_profissional' id='id_profissional' value="{{ $agenda_profissional->id_profissional or old('id_profissional') }}" readonly="readonly" />
+      </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label" for="data_inicial">Data de Inicial</label>
@@ -78,14 +81,19 @@
       <div class='col-sm-2'>
       	<select class="form-control" name='status'>
           <option id="status" value=''>Selecione</option>
-          <option id="status" value='1' {{ ( ( $agenda_profissional->status == true ) ? 'selected' : '') }}>Ativo</option>
-          <option id="status" value='0' {{ ( ( $agenda_profissional->status == false ) ? 'selected' : '') }}>Inativo</option>
+          @if( isset($agenda_profissional))
+            <option id="status" value='1' {{ ( ( $agenda_profissional->status == true ) ? 'selected' : '') }}>Ativo</option>
+            <option id="status" value='0' {{ ( ( $agenda_profissional->status == false ) ? 'selected' : '') }}>Inativo</option>
+          @else
+            <option id="status" value='1' {{ ( ( old('status') == '1' ) ? 'selected' : '') }}>Ativo</option>
+            <option id="status" value='0' {{ ( ( old('status') == '0' ) ? 'selected' : '') }}>Inativo</option>
+          @endif          
         </select>
     	</div>
     </div>
     <div class='form-group'>  
     	<div class="col-sm-offset-8 col-sm-4">  	
-  			<button type='submit' class='btn btn-success'>Confirmar</button>		
+  			<button type='submit' class='btn btn-primary'>Confirmar</button>		
   			<button type='reset' class='btn btn-danger'>Cancelar</button>
   		</div>
   	</div>

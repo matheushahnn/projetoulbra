@@ -1,20 +1,28 @@
 @extends('layouts.app')
 
 @section('content')
-
-@if( isset($errors) && count( $errors ) > 0 )
-	<div class='alert alert-danger'>
-		@foreach( $errors->all() as $erro )
-
-			<p>{{ $erro }}</p>
-
-		@endforeach
-	</div>
-@endif
 <ol class="breadcrumb">
 	<a href="{{ url( '/home' ) }}">Início /</a>
 	<a class='tela_atual' href="#">{{ $title }}</a>
 </ol>
+
+<!-- Errors -->
+@if( isset($errors) && count( $errors ) > 0 )
+  <div class='alert alert-danger'>
+    @foreach( $errors->all() as $erro )
+
+      <p>{{ $erro }}</p>
+
+    @endforeach
+  </div>
+@endif
+
+<!-- Success -->
+@if (session('status'))
+    <div class="alert alert-success">
+        {{ session('status') }}
+    </div>
+@endif
 
 <div class="container-fluid form">
 		<div class='row'>

@@ -30,4 +30,15 @@ class AtendimentoFormRequest extends FormRequest
             'hora'                   => 'required',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'id_paciente'       => "O campo paciente é obrigatório",
+            'id_profissional'   => "O campo profissional é obrigatório",
+            'data.required'     => 'O campo data é obrigatório.',
+            'hora'              => "O campo hora é obrigatório",
+        ];
+    }
+    
 }

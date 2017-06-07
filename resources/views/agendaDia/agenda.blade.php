@@ -34,12 +34,16 @@
 			</td>
 			<td class='funcoes'>
 				@if ( !empty( $horario['id_agenda_dia'] ) && empty( $horario['id_atendimento'] ) )
-					<a href="/agenda/agenda_dia/iniciar_atendimento/{{ $horario['id_agenda_dia'] }}" class='actions confirmar_presenca'>
-						<span class='glyphicon glyphicon-ok'></span>
-					</a>
-					<a href='#' class='actions delete'>
-						<span class='glyphicon glyphicon-trash'></span>
-					</a>
+					<form method='post' action="{{ route('agenda_dia.destroy', $horario['id_agenda_dia']) }}">
+				  	{!! method_field('DELETE') !!}
+				  	{!! csrf_field() !!}
+						<a href="/agenda/agenda_dia/iniciar_atendimento/{{ $horario['id_agenda_dia'] }}" class='actions confirmar_presenca'>
+							<span class='glyphicon glyphicon-ok'></span>
+						</a>
+						<button type='submit' class='btn-delete'>
+							<span class='glyphicon glyphicon-trash'></span>
+						</button>
+					</form>
 				@elseif( !empty( $horario['id_agenda_dia'] ) && !empty( $horario['id_atendimento'] ) )
 					<span>Paciente presente</span>
 				@endif

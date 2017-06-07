@@ -131,7 +131,7 @@ class PacienteController extends Controller
         if ( $insert ) {
             return redirect()->route('paciente.index')->with('status', 'Paciente criado com sucesso!');
         } else {
-            return redirect()->route('paciente.create')->withErrors(['msg' => 'Falha ao remover paciente!']);
+            return redirect()->route('paciente.create')->withErrors(['msg' => 'Falha ao criar paciente!']);
         }
 
     }

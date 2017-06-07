@@ -31,7 +31,7 @@
       <div class="form-group">
         <label for="hora_agenda" class="col-sm-2 control-label">Hora Agendamento</label>
         <div class="col-sm-1">
-          <input type="text" class="form-control" id="hora_agenda" name='hora_agenda' value="{{ \Carbon\Carbon::parse( $agendaDia->hora)->format( 'h:i' ) }}" disabled='' />
+          <input type="text" class="form-control" id="hora_agenda" name='hora_agenda' value="{{ \Carbon\Carbon::parse( $agendaDia->hora)->format( 'H:i' ) }}" disabled='' />
         </div>
         <label for="data_agenda" class="col-sm-2 control-label">Data Agendamento</label>
         <div class="col-sm-2">
@@ -93,9 +93,15 @@
       </div>
       <label class="col-sm-1 control-label" for="data_inicial">Hora</label>
       <div class='col-sm-1'>
-         <input type='text' maxlength='10' class="form-control campo_hora" id="hora" name='hora' placeholder="Hora Início" value="{{ $atendimento->hora or old('hora') }}" />
+          @if ( isset( $atendimento ) )
+            <!-- Edição -->
+            <input type='text' maxlength='10' class="form-control campo_hora" id="hora" name='hora' placeholder="Hora Início" value="{{ $atendimento->hora or old('hora') }}" />
+          @else
+            <!-- Novo -->
+            <input type='text' maxlength='10' class="form-control campo_hora" id="hora" name='hora' placeholder="Hora Início" value="{{ $hora or old('hora') }}" />
+          @endif
+        </div>
       </div>
-    </div>
     <div class="form-group">
       <label class="col-sm-2 control-label" for="procedimento">Procedimento</label>
       <div class='col-sm-2'>
@@ -160,7 +166,7 @@
     </div>
     <div class='form-group'>  
       <div class="col-sm-offset-8 col-sm-4">    
-  			<button type='submit' class='btn btn-success'>Confirmar</button>		
+  			<button type='submit' class='btn btn-primary'>Confirmar</button>		
   			<button type='reset' class='btn btn-danger'>Cancelar</button>
   		</div>
   	</div>

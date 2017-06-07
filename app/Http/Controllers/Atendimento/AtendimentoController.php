@@ -45,7 +45,7 @@ class AtendimentoController extends Controller
         $title = "Cadastrar Atendimento";
 
         $data = Carbon\Carbon::now()->format( 'd/m/Y' );
-        $hora = Carbon\Carbon::now()->format( 'h:i' );
+        $hora = Carbon\Carbon::now()->format( 'H:i' );
 
         return view('atendimento.create-edit', compact('title', 'atendimento', 'data', 'hora'));
     }
@@ -89,9 +89,9 @@ class AtendimentoController extends Controller
 
 
         if ( $insertProcedimento ) {
-            return redirect()->route('atendimento.index');
+            return redirect()->route('atendimento.index')->with('status', 'Atendimento criado com sucesso!');
         } else {
-            return redirect()->route('atendimento.create');
+            return redirect()->route('atendimento.create')->withErrors(['msg' => 'Falha ao remover atendimento!']);
         }
 
 
@@ -179,9 +179,9 @@ class AtendimentoController extends Controller
 
 
         if ( $insertProcedimento ) {
-            return redirect()->route('atendimento.index');
+            return redirect()->route('atendimento.index')->with('status', 'Atendimento atualizado com sucesso!');
         } else {
-            return redirect()->route('atendimento.create');
+            return redirect()->route('atendimento.create')->withErrors(['msg' => 'Falha ao remover atendimento!']);
         }
     }
 
@@ -200,14 +200,14 @@ class AtendimentoController extends Controller
 
         if ( $delete ) {
 
-            return redirect()->route('atendimento.index', $id);
+            return redirect()->route('atendimento.index', $id)->with('status', 'Atendimento removido com sucesso!');
 
         } else {
 
-            return redirect()->route('atendimento.index', $id)->with('Falha ao excluir atendimento.');
+            return redirect()->route('atendimento.index', $id)->withErrors(['msg' => 'Falha ao excluir atendimento.']);
 
         }
 
-
     }
+
 }
