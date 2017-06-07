@@ -149,7 +149,14 @@ class AgendaProfissionalController extends Controller
     public function store(AgendaProfissionalFormRequest $request)
     {
 
-        $dataPost = $request->all();
+        $dataPost = Array();
+        $dataPost['id_profissional'] = $request->input('id_profissional');
+        $dataPost['data_inicial'] = $request->input('data_inicial');
+        $dataPost['hora_inicial'] = $request->input('hora_inicial');
+        $dataPost['data_final'] = $request->input('data_final');
+        $dataPost['hora_final'] = $request->input('hora_final');
+        $dataPost['status'] = $request->input('status');
+        $dataPost['duracao'] = $request->duracao('id_profissional');
 
         // Salva agendaprofissional
         $insert = $this->agendaProfissional->create($dataPost);
