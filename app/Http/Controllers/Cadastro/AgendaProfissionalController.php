@@ -159,7 +159,7 @@ class AgendaProfissionalController extends Controller
         $dataPost['duracao'] = $request->duracao('id_profissional');
 
         // Salva agendaprofissional
-        $insert = $this->agendaProfissional->create($dataPost);
+        $insert = AgendaProfissional::create($dataPost);
         
         if ( $insert ) {
             return redirect()->route('agenda_profissional.index')->with('status', 'Agenda do profissional criado com sucesso!');
