@@ -1,6 +1,6 @@
 $( document ).ready(function() {
 		$( ".campo_data, #datepicker_agenda" ).datepicker({
-		  dayNamesMin: [ "D", "S", "T", "Q", "Q", "S", "S" ],		  
+		  dayNamesMin: [ "D", "S", "T", "Q", "Q", "S", "S" ],
     	monthNames: [ "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" ],
     	dateFormat: "dd/mm/yy",
 		});
@@ -14,9 +14,9 @@ $( document ).ready(function() {
 
 		// Click em algum horário da agenda do dia.
 		$( "#datepicker_agenda" ).datepicker( 'option', 'onSelect', function(date) {
-    		
+
 				var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-				
+
 				// POST para verificar horários do profissional e montar a agenda do dia.
 				$.ajax({
           type: "POST",
@@ -30,10 +30,10 @@ $( document ).ready(function() {
           	// Insere a agenda do dia no espaço apropriado.
           	$horario_agenda.html( response );
 
-            // Click no horário para inserir agendamento.	
+            // Click no horário para inserir agendamento.
 						// Click em algum horário da agenda do dia.
 						$horario_agenda.find( ".horario_agenda td:not(.funcoes)" ).click( function() {
-				    		
+
 								var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
 								var hora = $(this).closest('tr').attr('data-hora');
@@ -60,9 +60,8 @@ $( document ).ready(function() {
 				            carregaAutocompletePaciente();
 				          }
 				      	});
-				    	},
-						);
-            
+			    	});
+
           }
       	});
     	},
@@ -79,7 +78,7 @@ $( document ).ready(function() {
 			  key = String.fromCharCode( key );
 			  var regex = /[0-9]|\./;
 			  var codigo_permitidos = Array( 8, 9, 35, 36, 37, 38, 39,40,45,46 );
-			  
+
 			  if ( $.inArray( evt.keyCode, codigo_permitidos ) == 0 ) {
         	return true;
         } else if( !regex.test(key) ) {
@@ -90,10 +89,10 @@ $( document ).ready(function() {
     $( '.campo_data' ).mask( "99/99/9999" );
     // Expressão regular.
     $( '.campo_hora' ).mask( "AB:CD",  {'translation': {
-																					A: { pattern: /[0-2*]/ }, 
-																					B: { pattern: /[0-9*]/ }, 
-																					C: { pattern: /[0-6*]/ }, 
-																					D: { pattern: /[0-9*]/ }, 
+																					A: { pattern: /[0-2*]/ },
+																					B: { pattern: /[0-9*]/ },
+																					C: { pattern: /[0-6*]/ },
+																					D: { pattern: /[0-9*]/ },
 																				}
 																			 }
 														);
@@ -109,7 +108,7 @@ $( document ).ready(function() {
     		$hora.val('');
     		return false;
 
-    	} 
+    	}
 
     });
 
@@ -127,12 +126,12 @@ $( document ).ready(function() {
 
     // Adicionar Procedimento.
     $content_atendimento.find( "#btn_adicionar_procedimento" ).click( function() {
-      
+
       var id_procedimento = $content_atendimento.find( '#id_procedimento' ).val();
     	var procedimento = $content_atendimento.find( '#procedimento' ).val();
     	var quantidade = $content_atendimento.find( '#quantidade' ).val();
     	var obs_procedimento = $content_atendimento.find( '#observacao_procedimento' ).val();
-    	
+
       // Validações.
       // Verifica se procedimento foi informado.
       if ( !id_procedimento ) {
