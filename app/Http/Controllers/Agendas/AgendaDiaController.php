@@ -202,9 +202,17 @@ class AgendaDiaController extends Controller
      */
     public function store(AgendaDiaFormRequest $request)
     {
-        $data = $request->all();
+
+        $data = date_create_from_format('d/m/Y', $request->input('data'));
         
-        $insert = $this->agendaDia->create($data);
+        $dataAgendaDia['id_paciente']            = $request->input('id_paciente');
+        $dataAgendaDia['id_agenda_profissional'] = $request->input('id_agenda_profissional');
+        $dataAgendaDia['data']                   = date_format($data, 'Y-m-d');
+        $dataAgendaDia['hora']                   = $request->input('hora');
+        $dataAgendaDia['observacao']             = $request->input('observacao');
+
+
+        $insert = $this->agendaDia->create($dataAgendaDia);
 
         if ( $insert ) {
             return redirect()->route('agenda_dia.index')->with('status', 'Agendamento criado com sucesso!');

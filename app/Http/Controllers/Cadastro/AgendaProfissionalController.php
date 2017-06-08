@@ -153,30 +153,20 @@ class AgendaProfissionalController extends Controller
         
         $dataPost = Array();
         $dataPost['id_profissional'] = $request->input('id_profissional');
-        $dataPost['data_inicial'] = date_format( $data_inicial, 'Y-m-d' );
-        $dataPost['data_final'] = date_format($data_final, 'Y-m-d');
-        $dataPost['hora_inicial'] = $request->input('hora_inicial');
-        $dataPost['hora_final'] = $request->input('hora_final');
-        $dataPost['status'] = $request->input('status');
-        $dataPost['duracao'] = $request->input('duracao');
+        $dataPost['data_inicial']    = date_format( $data_inicial, 'Y-m-d' );
+        $dataPost['data_final']      = date_format($data_final, 'Y-m-d');
+        $dataPost['hora_inicial']    = $request->input('hora_inicial');
+        $dataPost['hora_final']      = $request->input('hora_final');
+        $dataPost['status']          = $request->input('status');
+        $dataPost['duracao']         = $request->input('duracao');
 
-/*
-
-        $dataPost['id_profissional'] = 1;
-        $dataPost['data_inicial'] = '10/08/2017';
-        $dataPost['hora_inicial'] = '08:00';
-        $dataPost['data_final'] = '20/08/2017';
-        $dataPost['hora_final'] = '10:00';
-        $dataPost['status'] = '1';
-        $dataPost['duracao'] = '20';
-*/
         // Salva agendaprofissional
         $insert = AgendaProfissional::create($dataPost);
         
         if ( $insert ) {
-            return redirect()->route('agenda_profissional.index')->with('status', 'Agenda do profissional criado com sucesso!');
+            return redirect()->route('agenda_profissional.index')->with('status', 'Agenda do profissional criada com sucesso!');
         } else {
-            return redirect()->route('agenda_profissional.create')->withErrors(['msg' => 'Falha ao criar agenda profissional!']);
+            return redirect()->route('agenda_profissional.create')->withErrors(['msg' => 'Falha ao criar agenda do profissional!']);
         }
 
 
@@ -223,18 +213,28 @@ class AgendaProfissionalController extends Controller
     public function update(AgendaProfissionalFormRequest $request, $id)
     {
         
-        $dataForm = $request->all();
+        $data_inicial = date_create_from_format('d/m/Y', $request->input('data_inicial'));
+        $data_final = date_create_from_format('d/m/Y', $request->input('data_final'));
+        
+        $dataPost = Array();
+        $dataPost['id_profissional'] = $request->input('id_profissional');
+        $dataPost['data_inicial']    = date_format( $data_inicial, 'Y-m-d' );
+        $dataPost['data_final']      = date_format($data_final, 'Y-m-d');
+        $dataPost['hora_inicial']    = $request->input('hora_inicial');
+        $dataPost['hora_final']      = $request->input('hora_final');
+        $dataPost['status']          = $request->input('status');
+        $dataPost['duracao']         = $request->input('duracao');
 
         // Recupera o item para editar.
         $agenda_profissional = $this->agendaProfissional->find($id);
 
         // Altera agenda profissional.
-        $update = $agenda_profissional->update($dataForm);
+        $update = $agenda_profissional->update($dataPost);
         
         if ( $update ) {
-            return redirect()->route('agenda_profissional.index');
+            return redirect()->route('agenda_profissional.index')->with('status', 'Agenda do profissional atualizada com sucesso!');
         } else {
-            return redirect()->route('agenda_profissional.create');
+            return redirect()->route('agenda_profissional.create')->withErrors(['msg' => 'Falha ao criar agenda do profissional!']);
         }
     }
 
@@ -246,6 +246,26 @@ class AgendaProfissionalController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        $agendaProfissional = AgendaProfissional::find($id);
+        // Busca agendaDia vinculadas a essa agenda do profissional.
+        $agendaDia = $agendaProfissional->agendaDia()->first();
+
+        // Verifica se agenda do profissional está em algum agendaDia.
+        if ( isset( $agendaDia ) ) {
+            return redirect()->route('agenda_profissional.index')->withErrors(['msg'=>'Agenda do profissional não pode ser deletada, possui agendamento. Favor remover os vínculos antes de realizar esta operação.']);
+        }
+
+        $delete = $agendaProfissional->delete();
+
+        if ( $delete ) {
+
+            return redirect()->route('agenda_profissional.index')->with('status', 'Agenda do profissional removida com sucesso!');
+
+        } else {
+            
+            return redirect()->route('agenda_profissional.index', $id)->withErrors(['msg' => 'Falha ao excluir agenda_profissional!']);
+
+        }
     }
 }

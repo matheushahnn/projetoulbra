@@ -58,14 +58,18 @@ class AtendimentoController extends Controller
      */
     public function store(AtendimentoFormRequest $request)
     {
+
+        $data = date_create_from_format('d/m/Y', $request->input('data'));
+
         $dataAtendimento = Array();
         $dataProcedimento = Array();
-        $dataAtendimento['id_paciente'] = $request->input('id_paciente');
+
+        $dataAtendimento['id_paciente']     = $request->input('id_paciente');
         $dataAtendimento['id_profissional'] = $request->input('id_profissional');
-        $dataAtendimento['data'] = $request->input('data');
-        $dataAtendimento['hora'] = $request->input('hora');
-        $dataAtendimento['id_agenda_dia'] = $request->input('id_agenda_dia');
-        $dataProcedimento = $request->input('procedimento_atendimentos');
+        $dataAtendimento['data']            = date_format($data, 'Y-m-d');
+        $dataAtendimento['hora']            = $request->input('hora');
+        $dataAtendimento['id_agenda_dia']   = $request->input('id_agenda_dia');
+        $dataProcedimento                   = $request->input('procedimento_atendimentos');
 
         // Início commit
         DB::beginTransaction();
@@ -141,11 +145,15 @@ class AtendimentoController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $data = date_create_from_format('d/m/Y', $request->input('data'));
+
         $dataAtendimento                    = Array();
         $dataProcedimento                   = Array();
+        
         $dataAtendimento['id_paciente']     = $request->input('id_paciente');
         $dataAtendimento['id_profissional'] = $request->input('id_profissional');
-        $dataAtendimento['data']            = $request->input('data');
+        $dataAtendimento['data']            = date_format($data, 'Y-m-d');
         $dataAtendimento['hora']            = $request->input('hora');
         $dataProcedimento                   = $request->input('procedimento_atendimentos');
 

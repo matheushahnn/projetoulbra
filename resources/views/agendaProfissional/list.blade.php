@@ -5,14 +5,23 @@
   <a href="{{ url( '/home' ) }}">Início /</a>
   <a class='tela_atual' href="#">{{ $title }}</a>
 </ol>
+
+<!-- Errors -->
 @if( isset($errors) && count( $errors ) > 0 )
-	<div class='alert alert-danger'>
-		@foreach( $errors->all() as $erro )
+  <div class='alert alert-danger'>
+    @foreach( $errors->all() as $erro )
 
-			<p>{{ $erro }}</p>
+      <p>{{ $erro }}</p>
 
-		@endforeach
-	</div>
+    @endforeach
+  </div>
+@endif
+
+<!-- Success -->
+@if (session('status'))
+    <div class="alert alert-success">
+        {{ session('status') }}
+    </div>
 @endif
 
 <div class="container-fluid form">
@@ -83,12 +92,16 @@
 						<td>{{ substr($agenda->hora_final, 0, -3) }}</td>
 						<td>{{ $agenda->status }}</td>
 						<td>
-							<a href="{{route( "agenda_profissional.edit", $agenda->id )}}" class='actions edit'>
-								<span class='glyphicon glyphicon-pencil'></span>
-							</a>
-							<a href='#' class='actions delete'>
-								<span class='glyphicon glyphicon-trash'></span>
-							</a>
+							<form method='post' action="{{ route('agenda_profissional.destroy', $agenda->id) }}">
+						  	{!! method_field('DELETE') !!}
+						  	{!! csrf_field() !!}
+								<a href="{{route( "agenda_profissional.edit", $agenda->id )}}" class='actions edit'>
+									<span class='glyphicon glyphicon-pencil'></span>
+								</a>
+								<button type='submit' class='btn-delete'>
+									<span class='glyphicon glyphicon-trash'></span>
+								</button>
+							</form>
 						</td>
 					</tr>					
 					@endforeach
