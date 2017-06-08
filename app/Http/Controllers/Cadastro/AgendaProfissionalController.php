@@ -156,7 +156,7 @@ class AgendaProfissionalController extends Controller
         $dataPost['data_final'] = $request->input('data_final');
         $dataPost['hora_final'] = $request->input('hora_final');
         $dataPost['status'] = $request->input('status');
-        $dataPost['duracao'] = $request->duracao('id_profissional');
+        $dataPost['duracao'] = $request->input('duracao');
 
         print_r($dataPost);
 
