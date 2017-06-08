@@ -6,9 +6,7 @@
  * @package  Laravel
  * @author   Taylor Otwell <taylor@laravel.com>
  */
-ini_set('display_errors', 'On');
-ini_set('display_startup_errors', 'On');
-ini_set('html_errors', 'On');
+
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
@@ -60,16 +58,16 @@ $response->send();
 $kernel->terminate($request, $response);
 
 
-$dbopts = parse_url(getenv('DATABASE_URL'));
-$app->register(new Csanquer\Silex\PdoServiceProvider\Provider\PDOServiceProvider('pdo'),
-               array(
-                'pdo.server' => array(
-                   'driver'   => 'pgsql',
-                   'user' => $dbopts["user"],
-                   'password' => $dbopts["pass"],
-                   'host' => $dbopts["host"],
-                   'port' => $dbopts["port"],
-                   'dbname' => ltrim($dbopts["path"],'/')
-                   )
-               )
-);
+// $dbopts = parse_url(getenv('DATABASE_URL'));
+// $app->register(new Csanquer\Silex\PdoServiceProvider\Provider\PDOServiceProvider('pdo'),
+//                array(
+//                 'pdo.server' => array(
+//                    'driver'   => 'pgsql',
+//                    'user' => $dbopts["user"],
+//                    'password' => $dbopts["pass"],
+//                    'host' => $dbopts["host"],
+//                    'port' => $dbopts["port"],
+//                    'dbname' => ltrim($dbopts["path"],'/')
+//                    )
+//                )
+// );

@@ -148,29 +148,24 @@ class AgendaProfissionalController extends Controller
      */
     public function store(AgendaProfissionalFormRequest $request)
     {
-        print_r($request);
-/*
         $dataPost = Array();
-        $dataPost['id_profissional'] = $request->input('id_profissional');
-        $dataPost['data_inicial'] = $request->input('data_inicial');
-        $dataPost['hora_inicial'] = $request->input('hora_inicial');
-        $dataPost['data_final'] = $request->input('data_final');
-        $dataPost['hora_final'] = $request->input('hora_final');
-        $dataPost['status'] = $request->input('status');
-        $dataPost['duracao'] = $request->input('duracao');
-*/
+        // $dataPost['id_profissional'] = $request->input('id_profissional');
+        // $dataPost['data_inicial'] = $request->input('data_inicial');
+        // $dataPost['hora_inicial'] = $request->input('hora_inicial');
+        // $dataPost['data_final'] = $request->input('data_final');
+        // $dataPost['hora_final'] = $request->input('hora_final');
+        // $dataPost['status'] = $request->input('status');
+        // $dataPost['duracao'] = $request->input('duracao');
 
-        
-        return redirect()->route('agenda_profissional.create')->withErrors(['msg' => $dataPost]);
-/*
 
-        // $dataPost['id_profissional'] = 1;
-        // $dataPost['data_inicial'] = '2017-10-10';
-        // $dataPost['hora_inicial'] = '08:00';
-        // $dataPost['data_final'] = '2017-10-20';
-        // $dataPost['hora_final'] = '10:00';
-        // $dataPost['status'] = '1';
-        // $dataPost['duracao'] = 20;
+
+        $dataPost['id_profissional'] = 1;
+        $dataPost['data_inicial'] = '10/08/2017';
+        $dataPost['hora_inicial'] = '08:00';
+        $dataPost['data_final'] = '20/08/2017';
+        $dataPost['hora_final'] = '10:00';
+        $dataPost['status'] = '1';
+        $dataPost['duracao'] = '20';
 
         // Salva agendaprofissional
         $insert = AgendaProfissional::create($dataPost);
@@ -181,7 +176,6 @@ class AgendaProfissionalController extends Controller
             return redirect()->route('agenda_profissional.create')->withErrors(['msg' => 'Falha ao criar agenda profissional!']);
         }
 
-        */
 
     }
 
