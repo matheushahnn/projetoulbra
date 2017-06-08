@@ -148,7 +148,8 @@ class AgendaProfissionalController extends Controller
      */
     public function store(AgendaProfissionalFormRequest $request)
     {
-
+        print_r($request);
+/*
         $dataPost = Array();
         $dataPost['id_profissional'] = $request->input('id_profissional');
         $dataPost['data_inicial'] = $request->input('data_inicial');
@@ -157,8 +158,7 @@ class AgendaProfissionalController extends Controller
         $dataPost['hora_final'] = $request->input('hora_final');
         $dataPost['status'] = $request->input('status');
         $dataPost['duracao'] = $request->input('duracao');
-
-        print_r($dataPost);
+*/
 
         
         return redirect()->route('agenda_profissional.create')->withErrors(['msg' => $dataPost]);
