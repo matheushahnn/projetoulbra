@@ -148,13 +148,13 @@ class AgendaProfissionalController extends Controller
      */
     public function store(AgendaProfissionalFormRequest $request)
     {
-        $data_inicial = DateTime::createFromFormat('d/m/Y', $request->input('data_inicial'));
-        $data_final = DateTime::createFromFormat('d/m/Y', $request->input('data_final'));
+        $data_inicial = date_create_from_format('d/m/Y', $request->input('data_inicial'));
+        $data_final = date_create_from_format('d/m/Y', $request->input('data_final'));
         
         $dataPost = Array();
         $dataPost['id_profissional'] = $request->input('id_profissional');
-        $dataPost['data_inicial'] = $data_inicial->format('Y-m-d');
-        $dataPost['data_final'] = $data_final->format('Y-m-d');
+        $dataPost['data_inicial'] = date_format( $data_inicial, 'Y-m-d' );
+        $dataPost['data_final'] = date_format($data_final, 'Y-m-d');
         $dataPost['hora_inicial'] = $request->input('hora_inicial');
         $dataPost['hora_final'] = $request->input('hora_final');
         $dataPost['status'] = $request->input('status');
