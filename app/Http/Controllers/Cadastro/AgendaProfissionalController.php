@@ -148,16 +148,20 @@ class AgendaProfissionalController extends Controller
      */
     public function store(AgendaProfissionalFormRequest $request)
     {
+        $data_inicial = $request->input('data_inicial');
+        $data_final = $request->input('data_final');
         $dataPost = Array();
-        // $dataPost['id_profissional'] = $request->input('id_profissional');
-        // $dataPost['data_inicial'] = $request->input('data_inicial');
-        // $dataPost['hora_inicial'] = $request->input('hora_inicial');
-        // $dataPost['data_final'] = $request->input('data_final');
-        // $dataPost['hora_final'] = $request->input('hora_final');
-        // $dataPost['status'] = $request->input('status');
-        // $dataPost['duracao'] = $request->input('duracao');
+        $dataPost['id_profissional'] = $request->input('id_profissional');
+        $dataPost['data_inicial'] = '2017-01-01';
+        $dataPost['data_final'] = '2017-01-10';
+        $dataPost['hora_inicial'] = $request->input('hora_inicial');
+        $dataPost['hora_final'] = $request->input('hora_final');
+        $dataPost['status'] = $request->input('status');
+        $dataPost['duracao'] = $request->input('duracao');
 
+        dd($dataPost);
 
+/*
 
         $dataPost['id_profissional'] = 1;
         $dataPost['data_inicial'] = '10/08/2017';
@@ -166,7 +170,7 @@ class AgendaProfissionalController extends Controller
         $dataPost['hora_final'] = '10:00';
         $dataPost['status'] = '1';
         $dataPost['duracao'] = '20';
-
+*/
         // Salva agendaprofissional
         $insert = AgendaProfissional::create($dataPost);
         
