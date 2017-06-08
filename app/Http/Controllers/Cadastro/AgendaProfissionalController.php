@@ -158,7 +158,11 @@ class AgendaProfissionalController extends Controller
         $dataPost['status'] = $request->input('status');
         $dataPost['duracao'] = $request->duracao('id_profissional');
 
-        dd($dataPost);
+        print_r($dataPost);
+
+        
+        return redirect()->route('agenda_profissional.create')->withErrors(['msg' => $dataPost]);
+/*
 
         // $dataPost['id_profissional'] = 1;
         // $dataPost['data_inicial'] = '2017-10-10';
@@ -176,6 +180,8 @@ class AgendaProfissionalController extends Controller
         } else {
             return redirect()->route('agenda_profissional.create')->withErrors(['msg' => 'Falha ao criar agenda profissional!']);
         }
+
+        */
 
     }
 
