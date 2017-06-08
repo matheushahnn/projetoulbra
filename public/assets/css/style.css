@@ -81,3 +81,7 @@ a, a:hover {
 .agenda_dia_profissional tbody td:last_child {
 	cursor: initial;
 }
+
+#page-wrapper {
+  background: #FFF;
+}

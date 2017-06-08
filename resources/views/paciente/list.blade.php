@@ -1,13 +1,31 @@
 @extends('layouts.app')
 
 @section('content')
-
+{{-- 
 <ol class="breadcrumb">
   <a href="{{ url( '/home' ) }}">Início /</a>
   <a class='tela_atual' href="#">{{ $title }}</a>
-</ol>
+</ol> --}}
 
-<div class="container-fluid form">
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Cadastros</h2>
+        <ol class="breadcrumb">
+            <li>
+  						<a href="{{ url( '/home' ) }}">Início</a>
+            </li>
+            <li class="active">
+  						<strong>{{ $title }}</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
 
 	<!-- Errors -->
   @if( isset($errors) && count( $errors ) > 0 )
@@ -27,6 +45,7 @@
 	    </div>
 	@endif
 
+
 	<div class='row'>
 		<div class="col-md-10">
 			<form method='post' action="{{ route('paciente.search') }}" class='form-horizontal'>
@@ -44,7 +63,7 @@
 		  	</div>
 				<div class="col-md-2">
 					<button type='submit' class='btn btn-primary pull-right'>
-					<i class='glyphicon glyphicon-search'></i>
+					<i class='fa fa-search'></i>
 						Buscar
 					</button>
 				</div>
@@ -52,55 +71,59 @@
 		</div>
 		<div class="col-md-2">
 			<a href="{{ route('paciente.create') }}" class='btn btn-default btn-add'>
-				<i class='glyphicon glyphicon-plus'></i>
+				<i class='fa fa-plus'></i>
 				Novo
 			</a>
 		</div>
 	</div>
-  <div class="row">
-  	<div class="col-md-12">
-			<table class='table table-striped'>
-				<thead>
-					<tr>
+  <div class="row m-t">
+	  <div class='col-sm-12'>
+	  	<div class='inbox-content'>
+	  		<div class="table-responsive">
+    			<table class="table table-striped table-bordered table-hover dataTables-example">
+	        <thead>
+		        <tr>
 						<th>Código</th>
 						<th>Nome</th>
 						<th>Data Nascimento</th>
 						<th>Ficha de Atendimento</th>
 						<th width='100px'>Ações</th>
 					</tr>
-				</thead>
-				@forelse($pacientes as $paciente)
-					<tr>
-						<td>{{ $paciente->id }}</td>
-						<td>{{ $paciente->nome }}</td>
-						<td>{{ \Carbon\Carbon::parse( $paciente->dtnasc )->format( 'd/m/Y' ) }}</td>
-						<td>{{ $paciente->ficha_atendimento }}</td>
-						<td>
-							<form method='post' action="{{ route('paciente.destroy', $paciente->id) }}">
-						  	{!! method_field('DELETE') !!}
-						  	{!! csrf_field() !!}
-								<a href="{{route( "paciente.edit", $paciente->id )}}" class='actions edit'>
-									<span class='glyphicon glyphicon-pencil'></span>
-								</a>
-								<button type='submit' class='btn-delete'>
-									<span class='glyphicon glyphicon-trash'></span>
-								</button>
-							</form>
-						</td>
-					</tr>				
-				@empty
-					<tr>
-						<td colspan="4">
-							Nenhum paciente cadastrado
-						</td>
-					</tr>
-				@endforelse	
-				<tfoot>
-				</tfoot>
-			</table>
+	        </thead>
+	      	<tbody>
+	    			@forelse($pacientes as $paciente)
+						<tr role='row'>
+							<td>{{ $paciente->id }}</td>
+							<td>{{ $paciente->nome }}</td>
+							<td>{{ \Carbon\Carbon::parse( $paciente->dtnasc )->format( 'd/m/Y' ) }}</td>
+							<td>{{ $paciente->ficha_atendimento }}</td>
+							<td>
+								<form method='post' action="{{ route('paciente.destroy', $paciente->id) }}">
+							  	{!! method_field('DELETE') !!}
+							  	{!! csrf_field() !!}
+									<a href="{{route( "paciente.edit", $paciente->id )}}" class='actions edit'>
+										<span class='fa fa-pencil'></span>
+									</a>
+									<button type='submit' class='btn-delete'>
+										<span class='fa fa-trash'></span>
+									</button>
+								</form>
+							</td>
+						</tr>				
+					@empty
+						<tr>
+							<td colspan="4">
+								Nenhum paciente cadastrado
+							</td>
+						</tr>
+					@endforelse	
+					</tbody>
+					<tfoot>
+					</tfoot>
+				</table>
+			</div>
 		</div>
 	</div>
-
 </div>
 
 @endsection

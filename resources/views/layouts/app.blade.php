@@ -12,9 +12,13 @@
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ URL::asset('assets/css/css/bootstrap.min.css') }}" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="{{ URL::asset('assets/css/style.css') }}" />
+    <link href="{{ URL::asset('assets/css/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+    <link href="{{ URL::asset('assets/css/css/animate.css') }}" rel="stylesheet">
+    <link href="{{ URL::asset('assets/css/css/style.css') }}" rel="stylesheet">
+
+    {{-- <link rel="stylesheet" href="{{ URL::asset('assets/css/style.css') }}" /> --}}
 
     <!-- Scripts -->
     <script>
@@ -24,103 +28,98 @@
     </script>
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
-                <ul class="nav navbar-nav navbar-left">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            Cadastros
+
+    <div id="wrapper">
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav metismenu" id="side-menu">
+                    <li class="nav-header">
+                        <div>
+                            @if (Auth::guest())
+                                <div><a href="{{ route('login') }}">Login</a></div>
+                            @else
+                                <div class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                        {{ Auth::user()->name }} <span class="caret"></span>
+                                    </a>
+
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li>
+                                            <a href="{{ route('logout') }}"
+                                                onclick="event.preventDefault();
+                                                         document.getElementById('logout-form').submit();">
+                                                Logout
+                                            </a>
+
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                {{ csrf_field() }}
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                            @endif
+                        </div>
+                    </li>
+                    <li class="active">
+                        <a href="index.html"><i class="fa fa-th-large"></i> 
+                            <span class="nav-label">Cadastros</span> <span class="fa arrow"></span>
                         </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
+                        <ul class="nav nav-second-level collapse in">
+                            <li class="active">
                                 <a href="{{ route('paciente.index') }}">
                                     Paciente
                                 </a>
+                            </li>
+                            <li>
                                 <a href="{{ route('profissional.index') }}">
                                     Profissional
                                 </a>
+                            </li>
+                            <li>
                                 <a href="{{ route('procedimento.index') }}">
                                     Procedimento
                                 </a>
+                            </li>
+                            <li>
                                 <a href="{{ route('agenda_profissional.index') }}">
                                     Agenda Profissional
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            Agenda
+                    <li>
+                        <a href="{{ route('agenda_dia.index') }}">
+                            <i class="fa fa-diamond"></i>     <span class="nav-label">  Agenda do dia </span>
                         </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a href="{{ route('agenda_dia.index') }}">
-                                    Agenda do dia
-                                </a>
-                            </li>
-                        </ul>
                     </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            Atendimento
+                    <li>
+                        <a href="{{ route('atendimento.index') }}">
+                            <i class="fa fa-diamond"></i>     <span class="nav-label">  Atendimento </span>
                         </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a href="{{ route('atendimento.index') }}">
-                                    Novo Atendimento
-                                </a>
-                            </li>
-                        </ul>
                     </li>
                 </ul>
-                </div>
 
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @if (Auth::guest())
-                            <li><a href="{{ route('login') }}">Login</a></li>
-                        @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endif
-                    </ul>
-                </div>
             </div>
         </nav>
 
-        @yield('content')
+        <div id="page-wrapper">
+            @yield('content')
+        </div>
     </div>
 
     <!-- Scripts -->
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    {{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+    <!-- Mainly scripts -->
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    {{-- <script src="js/bootstrap.min.js"></script> --}}
+    <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+    <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/dataTables/datatables.min.js')}}"></script>
+    <script src="{{ asset('js/inspinia.js') }}"></script>
+    <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
     <script src="{{ asset('js/jquery.mask.min.js')}}"></script>
     <script src="{{ asset('assets/js/js.js') }}"></script>
 </body>
