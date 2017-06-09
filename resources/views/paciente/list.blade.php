@@ -92,46 +92,47 @@
 	      		<div class="col-md-12">
 		  		    <div class="table-responsive">
                 <table class="table table-striped table-bordered table-hover dataTables-example" >
-				        <thead>
-					        <tr>
-									<th>Código</th>
-									<th>Nome</th>
-									<th>Data Nascimento</th>
-									<th>Ficha de Atendimento</th>
-									<th width='100px'>Ações</th>
-								</tr>
-				        </thead>
-				      	<tbody>
-				    			@forelse($pacientes as $paciente)
-									<tr class='gradA'>
-										<td>{{ $paciente->id }}</td>
-										<td>{{ $paciente->nome }}</td>
-										<td>{{ \Carbon\Carbon::parse( $paciente->dtnasc )->format( 'd/m/Y' ) }}</td>
-										<td>{{ $paciente->ficha_atendimento }}</td>
-										<td>
-											<form method='post' action="{{ route('paciente.destroy', $paciente->id) }}">
-										  	{!! method_field('DELETE') !!}
-										  	{!! csrf_field() !!}
-												<a href="{{route( "paciente.edit", $paciente->id )}}" class='actions edit'>
-													<i class='fa fa-edit'></i>
-												</a>
-												<button type='submit' class='btn-delete'>
-													<span class='fa fa-trash'></span>
-												</button>
-											</form>
-										</td>
-									</tr>				
-								@empty
-									<tr>
-										<td colspan="4">
-											Nenhum paciente cadastrado
-										</td>
+					        <thead>
+						        <tr>
+										<th>Código</th>
+										<th>Nome</th>
+										<th>Data Nascimento</th>
+										<th class="sorting">Ficha de Atendimento</th>
+										<th width='100px'>Ações</th>
 									</tr>
-								@endforelse	
-								</tbody>
-								<tfoot>
-								</tfoot>
-							</table>
+					        </thead>
+					      	<tbody>
+					    			@forelse($pacientes as $paciente)
+										<tr class='gradA'>
+											<td>{{ $paciente->id }}</td>
+											<td>{{ $paciente->nome }}</td>
+											<td>{{ \Carbon\Carbon::parse( $paciente->dtnasc )->format( 'd/m/Y' ) }}</td>
+											<td>{{ $paciente->ficha_atendimento }}</td>
+											<td>
+												<form method='post' action="{{ route('paciente.destroy', $paciente->id) }}">
+											  	{!! method_field('DELETE') !!}
+											  	{!! csrf_field() !!}
+													<a href="{{route( "paciente.edit", $paciente->id )}}" class='actions edit'>
+														<i class='fa fa-edit'></i>
+													</a>
+													<button type='submit' class='btn-delete'>
+														<span class='fa fa-trash'></span>
+													</button>
+												</form>
+											</td>
+										</tr>				
+										@empty
+											<tr>
+												<td colspan="4">
+													Nenhum paciente cadastrado
+												</td>
+											</tr>
+										@endforelse	
+									</tbody>
+									<tfoot>
+									</tfoot>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>
