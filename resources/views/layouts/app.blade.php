@@ -18,7 +18,7 @@
     <link href="{{ URL::asset('assets/css/css/animate.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('assets/css/css/style.css') }}" rel="stylesheet">
 
-    {{-- <link rel="stylesheet" href="{{ URL::asset('assets/css/style.css') }}" /> --}}
+    <link rel="stylesheet" href="{{ URL::asset('assets/css/style.css') }}" />
 
     <!-- Scripts -->
     <script>
@@ -89,12 +89,12 @@
                     </li>
                     <li>
                         <a href="{{ route('agenda_dia.index') }}">
-                            <i class="fa fa-diamond"></i>     <span class="nav-label">  Agenda do dia </span>
+                            <i class="fa fa-calendar"></i>     <span class="nav-label">  Agenda do dia </span>
                         </a>
                     </li>
                     <li>
                         <a href="{{ route('atendimento.index') }}">
-                            <i class="fa fa-diamond"></i>     <span class="nav-label">  Atendimento </span>
+                            <i class="fa fa-clipboard"></i>     <span class="nav-label">  Atendimento </span>
                         </a>
                     </li>
                 </ul>
@@ -102,7 +102,7 @@
             </div>
         </nav>
 
-        <div id="page-wrapper">
+        <div id="page-wrapper" class='gray-bg'>
             @yield('content')
         </div>
     </div>

@@ -1,3 +1,21 @@
+.actions {
+  padding: 6px;
+  text-decoration: none;
+  margin: 0 2px;
+  color: #000;
+}
+
+.actions:hover{
+  text-decoration: none;
+  color: #000;
+}
+
+.btn-delete {
+  background: none;
+  border: none;
+}
+
+/* 
 .espaco_entre_input {
   margin: 0 0 10px 0;
 }
@@ -35,17 +53,10 @@ a, a:hover {
 	font-weight: 900;
 }
 
-.actions {
-  padding: 6px;
-  text-decoration: none;
-  margin: 0 2px;
-  color: #000;
-}
 
-.actions:hover{
-	text-decoration: none;
-  color: #000;
-}
+
+
+
 
 .pointer {
   cursor: pointer;
@@ -57,10 +68,7 @@ a, a:hover {
 .edit {
 }
 
-.btn-delete {
-  background: none;
-  border: none;
-}
+
 
 .btn-add {
 	margin-bottom: 10px;
@@ -71,7 +79,6 @@ a, a:hover {
 }
 
 
-/* AGENDA DIA */
 .form-superior {
 	margin: 0 0 15px 0;
 }
@@ -83,5 +90,7 @@ a, a:hover {
 }
 
 #page-wrapper {
-  background: #FFF;
+  background: #f3f3f4;
 }
+
+*/
