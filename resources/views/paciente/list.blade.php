@@ -90,8 +90,8 @@
       	<div class='ibox-content'>
       		<div class="row">
 	      		<div class="col-md-12">
-				  		<div class="table-responsive">
-			    			<table class="table table-striped table-bordered table-hover dataTables-example">
+		  		    <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover dataTables-example" >
 				        <thead>
 					        <tr>
 									<th>Código</th>
@@ -103,7 +103,7 @@
 				        </thead>
 				      	<tbody>
 				    			@forelse($pacientes as $paciente)
-									<tr role='row'>
+									<tr class='gradA'>
 										<td>{{ $paciente->id }}</td>
 										<td>{{ $paciente->nome }}</td>
 										<td>{{ \Carbon\Carbon::parse( $paciente->dtnasc )->format( 'd/m/Y' ) }}</td>
