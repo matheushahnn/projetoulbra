@@ -60,39 +60,39 @@
                             @endif
                         </div>
                     </li>
-                    <li class="active">
+                    <li class="{{ ( Request::is('cadastro*') ? 'active' : '') }}">
                         <a href="index.html"><i class="fa fa-th-large"></i> 
                             <span class="nav-label">Cadastros</span> <span class="fa arrow"></span>
                         </a>
-                        <ul class="nav nav-second-level collapse in">
-                            <li class="active">
+                        <ul class="nav nav-second-level collapse {{ ( Request::is('cadastro*') ? 'in' : '') }}">
+                            <li class="{{ ( Request::is('cadastro/paciente*') ? 'active' : '') }}">
                                 <a href="{{ route('paciente.index') }}">
                                     Paciente
                                 </a>
                             </li>
-                            <li>
+                            <li class="{{ ( Request::is('cadastro/profissional*') ? 'active' : '') }}">
                                 <a href="{{ route('profissional.index') }}">
                                     Profissional
                                 </a>
                             </li>
-                            <li>
+                            <li class="{{ ( Request::is('cadastro/procedimento*') ? 'active' : '') }}">
                                 <a href="{{ route('procedimento.index') }}">
                                     Procedimento
                                 </a>
                             </li>
-                            <li>
+                            <li class="{{ ( Request::is('cadastro/agenda_profissional*') ? 'active' : '') }}">
                                 <a href="{{ route('agenda_profissional.index') }}">
                                     Agenda Profissional
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <li>
+                    <li class="{{ ( Request::is('agenda/agenda_dia*') ? 'active' : '') }}">
                         <a href="{{ route('agenda_dia.index') }}">
                             <i class="fa fa-calendar"></i>     <span class="nav-label">  Agenda do dia </span>
                         </a>
                     </li>
-                    <li>
+                    <li class="{{ ( Request::is('atendimento*') ? 'active' : '') }}">
                         <a href="{{ route('atendimento.index') }}">
                             <i class="fa fa-clipboard"></i>     <span class="nav-label">  Atendimento </span>
                         </a>
