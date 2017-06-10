@@ -131,8 +131,6 @@ class AtendimentoController extends Controller
         $procedimento_list = $atendimento_query->select('p.descricao',  'p.id', 'pa.quantidade', 'pa.observacao')->get();
         $atendimento       = $atendimento_query->select('a.*', 'p_pac.nome AS nome_paciente', 'p_prof.nome AS nome_profissional')->first();
 
-        dd($procedimento_list);
-
         $title = "Odonto System | Editando atendimento";
 
         return view('atendimento.create-edit', compact('title', 'atendimento', 'procedimento_list'));
