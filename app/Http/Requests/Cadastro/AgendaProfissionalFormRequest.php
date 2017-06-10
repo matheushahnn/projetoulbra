@@ -27,7 +27,7 @@ class AgendaProfissionalFormRequest extends FormRequest
             'id_profissional'   => 'required',
             'data_inicial'       => 'required|date_format:"d/m/Y"',
             'hora_inicial'       => 'required',
-            'data_final'          => 'required|date_format:"d/m/Y"',
+            'data_final'          => 'required|date_format:"d/m/Y"|after:data_inicial',
             'hora_final'          => 'required',
             'status'            => 'required',
             'duracao'            => 'required|numeric',
@@ -37,7 +37,7 @@ class AgendaProfissionalFormRequest extends FormRequest
     public function messages()
     {
         return [
-            'id_profissional'   => "O campo profissional é obrigatório",
+            'id_profissional:required'   => "O campo profissional é obrigatório",
         ];
     }
 
