@@ -10,15 +10,15 @@
             <a href="{{ url( '/home' ) }}">Início</a>
           </li>
           <li>
-            <a href="{{ route( 'paciente.index' ) }}">Lista de Pacientes</a>
+            <a href="{{ route( 'atendimento.index' ) }}">Lista de Atendimentos</a>
           </li>
           <li class="active">
-            <a><strong>{{ $title }}</strong></a>
+            <a><strong>Cadastro de Atendimentos</strong></a>
           </li>
       </ol>
   </div>
 </div>
-<div class="wrapper wrapper-content animated fadeInRight">
+<div class="wrapper wrapper-content animated fadeInRight" id="create_atendimento">
   <div class='row'>
     <div class="col-md-12">
       <div class='ibox float-e-margins'>
