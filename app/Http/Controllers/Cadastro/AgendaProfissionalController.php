@@ -20,83 +20,6 @@ class AgendaProfissionalController extends Controller
 
     }
 
-    public function search(Request $request) {
-
-        $data = $request->all();
-        
-        $data_inicial = $request->input('data_inicial');
-        $data_final = $request->input('data_final');
-        $hora_inicial = $request->input('hora_inicial');
-        $hora_final = $request->input('hora_final');
-
-        $validator = NULL;
-
-        $select = Array(
-          'p.nome AS nome_profissional', 
-          'ap.id',
-          'ap.data_inicial',
-          'ap.hora_inicial',
-          'ap.data_final',
-          'ap.hora_final',
-          DB::raw("CASE WHEN ap.status IS TRUE THEN 'Ativo' ELSE 'Inativo' END AS status"),
-        );
-
-        // DB::connection()->enableQueryLog();
-
-        if ( empty( $data['busca'] ) ) {
-            
-            return $this->index();
-
-        } else {
-
-            if ($data['tipo_busca'] != 'id') {
-                
-
-                $agendas = DB::table('agenda_profissionais AS ap')
-                              ->leftJoin('profissionais AS prof', 'prof.id', '=', 'ap.id_profissional')
-                              ->leftJoin('pessoas AS p', 'p.id', '=', 'prof.id_pessoa')
-                              ->select($select)
-                              ->where($data['tipo_busca'], 'ilike', $data['busca'] . '%')
-                              ->when( $data_inicial, function ( $query ) use ( $data_inicial ) {
-                                return $query->where( 'ap.data_inicial', '>=', $data_inicial );
-                              })
-                              ->when( $data_final, function ( $query ) use ( $data_final ) {
-                                return $query->where( 'ap.data_final', '<=', $data_final );
-                              })
-                              ->when( $hora_inicial, function ( $query ) use ( $hora_inicial ) {
-                                return $query->where( 'ap.hora_inicial', '>=', $hora_inicial );
-                              })
-                              ->when( $hora_final, function ( $query ) use ( $hora_final ) {
-                                return $query->where( 'ap.hora_final', '<=', $hora_final );
-                              })
-                              ->orderby('nome')
-                              ->get();
-
-                  // dd(DB::getQueryLog());
-
-            } else if ($data['tipo_busca'] == 'id') {
-
-                $validator = $this->validate($request, [
-                    'busca' => 'numeric',
-                ]);
-
-                $agendas =  DB::table('profissionais AS prof')
-                          ->leftJoin('pessoas', 'prof.id_pessoa', '=', 'pessoas.id')
-                          ->select($select)
-                          ->where('prof.'.$data['tipo_busca'], '=', $data['busca'])
-                          ->orderby('nome')
-                          ->get();
-
-            }
-
-            $title = "Cadastrar Agenda Profissional";
-
-            return view('agendaProfissional.list', compact('title', 'agendas'))->withErrors($validator);; 
-
-        }
-
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -148,8 +71,8 @@ class AgendaProfissionalController extends Controller
      */
     public function store(AgendaProfissionalFormRequest $request)
     {
-        $data_inicial = date_create_from_format('d/m/Y', $request->input('data_inicial'));
-        $data_final = date_create_from_format('d/m/Y', $request->input('data_final'));
+        $data_inicial = date_format( date_create_from_format('d/m/Y', $request->input('data_inicial') ), 'Y-m-d' );
+        $data_final = date_format( date_create_from_format('d/m/Y', $request->input('data_final') ), 'Y-m-d');
         // Horas
         $hora_inicial = $request->input('hora_inicial');
         $hora_final   = $request->input('hora_final');
@@ -157,13 +80,38 @@ class AgendaProfissionalController extends Controller
         // Verifica se a hora final é menor que a hora incial.
         if ( strtotime( $hora_inicial ) > strtotime( $hora_final ) ) {
           // Retorna a tela de cadastro para corrigir os horários.
-          return redirect()->route('agenda_profissional.create')->withErrors(['msg' => 'A hora inicial não pode ser maior que a hora final!']);
+          return redirect()->route('agenda_profissional.create')->withInput($request->input())->withErrors(['msg' => 'A hora inicial não pode ser maior que a hora final!']);
+        }
+
+        // Verifica se datas e horários já foram usados.
+        $countMesmoHorario = DB::table('agenda_profissionais')
+                              ->where(function ($query) use ($data_inicial, $data_final) {
+                                  $query->where("data_inicial", "<=", $data_inicial)
+                                        ->where("data_final", ">=", $data_inicial)
+                                        ->orWhere(function ($query2) use ($data_final) {
+                                          $query2->where("data_inicial", "<=", $data_final)
+                                                 ->where("data_final", ">=", $data_final);
+                                        });
+                              })
+                              ->where(function ($query) use ($hora_inicial, $hora_final) {
+                                  $query->where("hora_inicial", "<=", "'$hora_inicial'")
+                                        ->where("hora_final", ">=", "'$hora_final'")
+                                        ->orWhere(function ($query2) use ($hora_inicial, $hora_final) {
+                                          $query2->where("hora_inicial", "<=", "'$hora_final'")
+                                                 ->where("hora_final", ">=", "'$hora_inicial'");
+                                        });
+                              })
+                              ->select(DB::raw("COUNT(id) AS count"))->first();
+            
+        if ($countMesmoHorario->count) {
+          // Retorna a tela de cadastro para corrigir os horários.
+          return redirect()->route('agenda_profissional.create')->withInput($request->input())->withErrors(['msg' => 'Período de datas e horas já utilizado, informe outro!']);          
         }
 
         $dataPost = Array();
         $dataPost['id_profissional'] = $request->input('id_profissional');
-        $dataPost['data_inicial']    = date_format( $data_inicial, 'Y-m-d' );
-        $dataPost['data_final']      = date_format($data_final, 'Y-m-d');
+        $dataPost['data_inicial']    = $data_inicial;
+        $dataPost['data_final']      = $data_final;
         $dataPost['hora_inicial']    = $hora_inicial;
         $dataPost['hora_final']      = $hora_final;
         $dataPost['status']          = $request->input('status');

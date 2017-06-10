@@ -13,10 +13,6 @@
 
 # Grupo de Atendimentos.
 Route::group(['namespace' => 'Atendimento','prefix' => 'atendimento', 'middleware' => 'auth'], function() {
-	Route::get('/', function() {
-		return 'Atendimentos';
-	});
-
 	// Atendimentos.
 	Route::post('/atendimento/search', 'AtendimentoController@search')->name('atendimento.search');
 	Route::resource('/atendimento', 'AtendimentoController');
@@ -25,9 +21,6 @@ Route::group(['namespace' => 'Atendimento','prefix' => 'atendimento', 'middlewar
 
 # Grupo de Agendas.
 Route::group(['namespace' => 'Agendas','prefix' => 'agenda', 'middleware' => 'auth'], function() {
-	Route::get('/', function() {
-		return 'Agendas';
-	});
 
 	// Agenda do dia.
 	Route::get('/agenda_dia/iniciar_atendimento/{id_agendamento}', 'AgendaDiaController@iniciarAtendimento')->name('agenda_dia.iniciar_atendimento');
@@ -39,9 +32,7 @@ Route::group(['namespace' => 'Agendas','prefix' => 'agenda', 'middleware' => 'au
 
 # Grupo de Cadastros.
 Route::group(['namespace' => 'Cadastro','prefix' => 'cadastro', 'middleware' => 'auth'], function() {
-	Route::get('/', function() {
-		return 'Cadastros';
-	});
+
 	// Procedimentos
 	Route::resource('/procedimento', 'ProcedimentoController'); #->middleware('auth')
 
@@ -63,7 +54,7 @@ Route::group(['prefix' => 'relatorios'], function() {
 	});
 });	
 
-Route::get('/', 'HomeController@index')->middleware('auth');
+Route::get('/', 'HomeController@index')->name('home')->middleware('auth');
 
 # Rota de Autenticação.
 Auth::routes();
