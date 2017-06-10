@@ -164,7 +164,7 @@ $( document ).ready(function() {
           html +=     obs_procedimento;
           html +=   '</td>';
           html +=   '<td>';
-          html +=     '<span title="Remover procedimento" class="pointer text-center remover_procedimento glyphicon glyphicon-trash"></span>';
+          html +=     '<span title="Remover procedimento" class="pointer text-center remover_procedimento fa fa-trash"></span>';
           html +=   '</td>';
           html += '</tr>';
 

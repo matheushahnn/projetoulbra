@@ -169,7 +169,7 @@
                            {{ $procedimento->observacao }}
                          </td>
                          <td>
-                           <span title="Remover procedimento" class="pointer text-center remover_procedimento glyphicon glyphicon-trash"></span>
+                           <span title="Remover procedimento" class="pointer text-center remover_procedimento fa fa-trash"></span>
                          </td>
                         </tr>
                       @empty
