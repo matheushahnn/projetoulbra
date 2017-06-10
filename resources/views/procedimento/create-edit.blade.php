@@ -13,7 +13,7 @@
           <a href="{{ route( 'procedimento.index' ) }}">Lista de Procedimentos</a>
         </li>
         <li class="active">
-          <a><strong>{{ $title }}</strong></a>
+          <a><strong>Cadastro de Procedimentos</strong></a>
         </li>
     </ol>
   </div>

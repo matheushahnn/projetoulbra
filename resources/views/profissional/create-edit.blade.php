@@ -10,10 +10,10 @@
           <a href="{{ url( '/home' ) }}">Início</a>
         </li>
         <li>
-          <a href="{{ route( 'procedimento.index' ) }}">Lista de Profissionais</a>
+          <a href="{{ route( 'profissional.index' ) }}">Lista de Profissionais</a>
         </li>
         <li class="active">
-          <a><strong>{{ $title }}</strong></a>
+          <a><strong>Cadastro de Profissionais</strong></a>
         </li>
     </ol>
   </div>

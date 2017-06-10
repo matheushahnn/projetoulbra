@@ -9,7 +9,7 @@
   						<a href="{{ url( '/home' ) }}">Início</a>
             </li>
             <li class="active">
-  						<strong>{{ $title }}</strong>
+  						<strong>Lista dos Agendamentos do Dia</strong>
             </li>
         </ol>
     </div>

@@ -10,10 +10,10 @@
           <a href="{{ url( '/home' ) }}">Início</a>
         </li>
         <li>
-          <a href="{{ route( 'procedimento.index' ) }}">Lista de Profissionais</a>
+          <a href="{{ route( 'agenda_profissional.index' ) }}">Lista de Agendamentos do Profissional</a>
         </li>
         <li class="active">
-          <a><strong>{{ $title }}</strong></a>
+          <a><strong>Cadastro de Agendamentos do Profissional</strong></a>
         </li>
     </ol>
   </div>

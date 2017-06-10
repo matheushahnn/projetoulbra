@@ -13,7 +13,7 @@
             <a href="{{ route( 'paciente.index' ) }}">Lista de Pacientes</a>
           </li>
           <li class="active">
-            <a><strong>{{ $title }}</strong></a>
+            <a><strong>Cadastro de Pacientes</strong></a>
           </li>
       </ol>
   </div>
