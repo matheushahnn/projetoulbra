@@ -43,23 +43,16 @@ Route::group(['namespace' => 'Cadastro','prefix' => 'cadastro', 'middleware' => 
 		return 'Cadastros';
 	});
 	// Procedimentos
-	Route::post('/procedimento/search', 'ProcedimentoController@search')->name('procedimento.search'); #->middleware('auth')
 	Route::resource('/procedimento', 'ProcedimentoController'); #->middleware('auth')
 
 	// Profissionais.
-	Route::post('/profissional/search', 'ProfissionalController@search')->name('profissional.search');
 	Route::resource('/profissional', 'ProfissionalController');
 
 	// Agenda Profissional.
-	Route::post('/agenda_profissional/search', 'AgendaProfissionalController@search')->name('agenda_profissional.search');
 	Route::resource('/agenda_profissional', 'AgendaProfissionalController');
 
 	// Pacientes.
 	Route::resource('/paciente', 'PacienteController');
-	Route::post('/paciente/search', 'PacienteController@search')->name('paciente.search');
-
-	Route::resource('/pessoa', 'PessoaController');
-	Route::post('/pessoa/storePessoa', 'PessoaController@storePessoa')->name('pessoa.storePessoa');
 
 });	
 
@@ -70,14 +63,12 @@ Route::group(['prefix' => 'relatorios'], function() {
 	});
 });	
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index')->middleware('auth');
 
 # Rota de Autenticação.
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', 'HomeController@index')->middleware('auth');
 
 Route::post('/procedimento/busca_autocomplete', 'Cadastro\\ProcedimentoController@buscaAutocomplete')->name('procedimento.buscaAutocomplete');
 Route::post('/profissional/busca_autocomplete', 'Cadastro\\ProfissionalController@buscaAutocomplete')->name('profissional.buscaAutocomplete');

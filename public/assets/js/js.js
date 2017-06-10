@@ -31,8 +31,8 @@ $( document ).ready(function() {
           	$horario_agenda.html( response );
 
             // Click no horário para inserir agendamento.
-						// Click em algum horário da agenda do dia.
-						$horario_agenda.find( ".horario_agenda td:not(.funcoes)" ).click( function() {
+            // Click em algum horário da agenda do dia.
+            $horario_agenda.find( ".horario_agenda td:not(.funcoes)" ).click( function() {
 
 								var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
@@ -294,11 +294,16 @@ $( document ).ready(function() {
             search: "Buscar:",
             info: "Exibindo _START_ até _END_ de _TOTAL_ resultados",
             lengthMenu: 'Exibir _MENU_ resultados &nbsp;',
+            infoEmpty:      "Nenhum registro encontrado",  
+            infoFiltered:   "(filtrado _MAX_ total)",
+            emptyTable:     "Nenhum registro",
+            zeroRecords:    "Nenhum registro",
             paginate: {
-              first:      "Primeira",
-              previous:   "Anterior",
-              next:       "Próxima",
-              last:       "Última"
+            first:      "Primeira",
+            previous:   "Anterior",
+            next:       "Próxima",
+            last:       "Última",
+            infoFiltered:   "(_MAX_ total)",
           },
 
           // processing:     "Traitement en cours...",

@@ -80,11 +80,6 @@
 												</td>
 											</tr>
 										@empty
-											<tr>
-												<td colspan="4">
-													Nenhum profissional cadastrado
-												</td>
-											</tr>
 										@endforelse	
 									</tbody>
 									<tfoot>

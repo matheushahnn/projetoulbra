@@ -20,16 +20,16 @@
 </thead>
 	@forelse($horarios as $horario)
 		<tr class='horario_agenda' data-hora="{{ $horario['hora'] }}" title='{{ $horario['observacao'] }}' data-id-agenda-dia="{{ $horario['id_agenda_dia'] }}">
-			<td>
+			<td class='pointer'>
 				{{ $horario['hora'] }}
 			</td>
-			<td>
+			<td class='pointer'>
 				{{ $horario['nome_paciente'] }}
 			</td>
-			<td>
+			<td class='pointer'>
 				{{ $horario['nome_profissional'] }}
 			</td>
-			<td>
+			<td class='pointer'>
 				{{ $horario['status'] }}
 			</td>
 			<td class='funcoes'>
@@ -38,10 +38,10 @@
 				  	{!! method_field('DELETE') !!}
 				  	{!! csrf_field() !!}
 						<a href="/agenda/agenda_dia/iniciar_atendimento/{{ $horario['id_agenda_dia'] }}" class='actions confirmar_presenca'>
-							<span class='glyphicon glyphicon-ok'></span>
+							<span class='fa fa-check'></span>
 						</a>
 						<button type='submit' class='btn-delete'>
-							<span class='glyphicon glyphicon-trash'></span>
+							<span class='fa fa-trash'></span>
 						</button>
 					</form>
 				@elseif( !empty( $horario['id_agenda_dia'] ) && !empty( $horario['id_atendimento'] ) )

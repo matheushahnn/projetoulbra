@@ -44,13 +44,13 @@
 
           	{!! csrf_field() !!}
           	<div class="form-group">
-              <label for="nome" class="col-sm-3 control-label">Nome</label>
+              <label for="nome" class="col-sm-2 control-label">Nome</label>
               <div class="col-sm-9">
               	<input type="text" class="form-control" id="nome" name='nome' placeholder="Nome" value="{{ $pessoa->nome or old('nome') }}" />
             	</div>
             </div>
             <div class="form-group">
-              <label class="col-sm-3 control-label" for="dtnasc">Data de Nascimento</label>
+              <label class="col-sm-2 control-label" for="dtnasc">Data de Nascimento</label>
               <div class='col-sm-2'>
                 @if ( isset( $paciente ) )
                 <!-- Edição. -->
@@ -62,7 +62,7 @@
             	</div>
             </div>
           	<div class="form-group">
-              <label class="col-sm-3 control-label" for="ficha_atendimento">Ficha de Atendimento</label>
+              <label class="col-sm-2 control-label" for="ficha_atendimento">Ficha de Atendimento</label>
               <div class='col-sm-2'>
               	<input maxlength='10' value="{{ $paciente->ficha_atendimento or old('ficha_atendimento') }}" type="text" class="form-control" id="ficha_atendimento" name='ficha_atendimento' placeholder="Ficha de Atendimento" />
             	</div>

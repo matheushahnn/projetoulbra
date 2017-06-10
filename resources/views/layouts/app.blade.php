@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ $title or "Teste Sem Nome" }}</title>
+    <title>{{ $title or "Software Gestão Odontológica" }}</title>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
@@ -34,16 +34,16 @@
             <div class="sidebar-collapse">
                 <ul class="nav metismenu" id="side-menu">
                     <li class="nav-header">
-                        <div>
+                        <div class="dropdown profile-element"> <span>
                             @if (Auth::guest())
                                 <div><a href="{{ route('login') }}">Login</a></div>
                             @else
                                 <div class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                        {{ Auth::user()->name }} <span class="caret"></span>
+                                        <span class="text-muted text-xs block">{{ Auth::user()->name }} <b class="caret"></span></b>
                                     </a>
 
-                                    <ul class="dropdown-menu" role="menu">
+                                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
                                         <li>
                                             <a href="{{ route('logout') }}"
                                                 onclick="event.preventDefault();
@@ -115,11 +115,12 @@
     <!-- Mainly scripts -->
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     {{-- <script src="js/bootstrap.min.js"></script> --}}
+    <script src="{{ asset('js/plugins/typehead/bootstrap3-typeahead.min.js') }}"></script>
     <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
     <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script src="{{ asset('js/plugins/dataTables/datatables.min.js')}}"></script>
-    <script src="{{ asset('js/inspinia.js') }}"></script>
     <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+    <script src="{{ asset('js/inspinia.js') }}"></script>
     <script src="{{ asset('js/jquery.mask.min.js')}}"></script>
     <script src="{{ asset('assets/js/js.js') }}"></script>
 </body>

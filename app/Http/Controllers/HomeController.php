@@ -23,6 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $title = "Software Gestão Odontológica";
+        return view('home', compact('title'));
     }
 }

@@ -1,11 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-{{-- 
-<ol class="breadcrumb">
-  <a href="{{ url( '/home' ) }}">Início /</a>
-  <a class='tela_atual' href="#">{{ $title }}</a>
-</ol> --}}
 
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10">
@@ -45,49 +40,18 @@
 	    </div>
 	@endif
 
-
-  <div class='row'>
-    <div class="col-md-12">
+  <div class="row">
+	  <div class="col-md-12">
       <div class='ibox float-e-margins'>
       	<div class='ibox-content'>
-      		<div class="row">
-      			<div class='col-md-10'>
-							<form method='post' action="{{ route('paciente.search') }}" class='form-horizontal'>
-								{!! csrf_field() !!}
-								<div class="col-md-5">
-									<input type="text" class="form-control" id="busca" name='busca' placeholder="Busca" value="{{ old('busca') }}" />
-								</div>
-								<label for="nome" class="col-sm-2 control-label">Buscar por:</label>
-								<div class="col-sm-3">
-						    	<select class='form-control' name='tipo_busca'>
-						    		<option value='nome'>Nome</option>
-						    		<option value="ficha_atendimento">Ficha Atendimento</option>
-						    		<option value="id">Código</option>
-						    	</select>
-						  	</div>
-								<div class="col-md-2">
-									<button type='submit' class='btn btn-primary pull-right'>
-									<i class='fa fa-search'></i>
-										Buscar
-									</button>
-								</div>
-							</form>
-						</div>
-						<div class="col-md-2">
-							<a href="{{ route('paciente.create') }}" class='btn btn-default btn-add'>
+      	<div class="row">
+						<div class="col-sm-offset-10 col-md-2 text-right">
+							<a href="{{ route('paciente.create') }}" class='btn btn-primary btn-add'>
 								<i class='fa fa-plus'></i>
 								Novo
 							</a>
 						</div>
 					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-  <div class="row">
-	  <div class="col-md-12">
-      <div class='ibox float-e-margins'>
-      	<div class='ibox-content'>
       		<div class="row">
 	      		<div class="col-md-12">
 		  		    <div class="table-responsive">
@@ -129,8 +93,7 @@
 											</tr>
 										@endforelse	
 									</tbody>
-									<tfoot>
-									</tfoot>
+									<tfoot></tfoot>
 								</table>
 							</div>
 						</div>

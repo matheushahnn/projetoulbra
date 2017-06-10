@@ -15,6 +15,9 @@
   border: none;
 }
 
+.pointer {
+  cursor: pointer;
+}
 /* 
 .espaco_entre_input {
   margin: 0 0 10px 0;
