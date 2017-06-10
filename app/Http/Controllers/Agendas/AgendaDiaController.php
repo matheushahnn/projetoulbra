@@ -71,7 +71,7 @@ class AgendaDiaController extends Controller
 
     public function busca_agenda(Request $request) {
 
-        $dia             = $request->dia_selecionado;
+        $dia             = date_format(date_create_from_format('d/m/Y', $request->dia_selecionado), 'Y-m-d');
         $id_profissional = $request->id_profissional;
         
         $agendaProfissional = new AgendaProfissional();
