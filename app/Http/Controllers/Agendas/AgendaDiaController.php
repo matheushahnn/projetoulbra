@@ -117,8 +117,6 @@ class AgendaDiaController extends Controller
                  ->orderby('ad.hora')
                  ->get();
 
-
-
             $horaControle = substr($agenda->hora_inicial, 0, -3);
             $i = 0;
             while($horaControle < $agenda->hora_final) {
@@ -187,7 +185,7 @@ class AgendaDiaController extends Controller
         $profissional = DB::table("agenda_profissionais AS ap")
                             ->leftJoin('profissionais AS prof', 'prof.id', '=', 'ap.id_profissional')
                             ->leftJoin('pessoas AS p_prof', 'p_prof.id', '=', 'prof.id_pessoa')
-                            ->select('ap.id AS id_agenda_profissional')
+                            ->select('ap.id AS id_agenda_profissional', 'p_prof.nome AS nome')
                             ->where('ap.id', '=', $agendaDia['id_agenda_profissional'])
                             ->first();
         
