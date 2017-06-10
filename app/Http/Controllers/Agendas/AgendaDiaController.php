@@ -49,9 +49,6 @@ class AgendaDiaController extends Controller
         $nomeProfissional = $profissional->pessoa()->first()->nome;
         $nomePaciente = $paciente->pessoa()->first()->nome;
 
-        $data_agenda  = $agendaDia->data;
-        $hora_agenda  = $agendaDia->hora;
-
         $title = "Odonto System | Iniciar atendimento da agenda";
 
         // Muda os status do agendamento.
