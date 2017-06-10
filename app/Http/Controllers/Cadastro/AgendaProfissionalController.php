@@ -164,8 +164,8 @@ class AgendaProfissionalController extends Controller
         $dataPost['id_profissional'] = $request->input('id_profissional');
         $dataPost['data_inicial']    = date_format( $data_inicial, 'Y-m-d' );
         $dataPost['data_final']      = date_format($data_final, 'Y-m-d');
-        $dataPost['hora_inicial']    = $request->input('hora_inicial');
-        $dataPost['hora_final']      = $request->input('hora_final');
+        $dataPost['hora_inicial']    = $hora_inicial;
+        $dataPost['hora_final']      = $hora_final;
         $dataPost['status']          = $request->input('status');
         $dataPost['duracao']         = $request->input('duracao');
 
@@ -224,13 +224,22 @@ class AgendaProfissionalController extends Controller
         
         $data_inicial = date_create_from_format('d/m/Y', $request->input('data_inicial'));
         $data_final = date_create_from_format('d/m/Y', $request->input('data_final'));
+        // Horas
+        $hora_inicial = $request->input('hora_inicial');
+        $hora_final   = $request->input('hora_final');
+        
+        // Verifica se a hora final é menor que a hora incial.
+        if ( strtotime( $hora_inicial ) > strtotime( $hora_final ) ) {
+          // Retorna a tela de cadastro para corrigir os horários.
+          return redirect()->route('agenda_profissional.create')->withErrors(['msg' => 'A hora inicial não pode ser maior que a hora final!']);
+        }
         
         $dataPost = Array();
         $dataPost['id_profissional'] = $request->input('id_profissional');
         $dataPost['data_inicial']    = date_format( $data_inicial, 'Y-m-d' );
         $dataPost['data_final']      = date_format($data_final, 'Y-m-d');
-        $dataPost['hora_inicial']    = $request->input('hora_inicial');
-        $dataPost['hora_final']      = $request->input('hora_final');
+        $dataPost['hora_inicial']    = $hora_inicial;
+        $dataPost['hora_final']      = $hora_final;
         $dataPost['status']          = $request->input('status');
         $dataPost['duracao']         = $request->input('duracao');
 

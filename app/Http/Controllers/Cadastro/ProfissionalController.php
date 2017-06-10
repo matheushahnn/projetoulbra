@@ -102,12 +102,15 @@ class ProfissionalController extends Controller
      */
     public function store(ProfissionalFormRequest $request)
     {
-		$dataPessoa = Array();
+
+        $dtnasc = date_create_from_format('d/m/Y', $request->input('dtnasc'));
+
+		$dataPessoa = Array();        
 		$dataProfissional = Array();
 
         // Pega os dados para preencher a tabela pessoas.
         $dataPessoa['nome'] = $request->nome;
-        $dataPessoa['dtnasc'] = $request->dtnasc;
+        $dataPessoa['dtnasc'] = date_format( $dtnasc, 'Y-m-d');
         // Início commit
         DB::beginTransaction();
 
@@ -169,16 +172,19 @@ class ProfissionalController extends Controller
      */
     public function update(ProfissionalFormRequest $request, $id)
     {
+        
+        $dtnasc = date_create_from_format('d/m/Y', $request->input('dtnasc'));
+
         // Recupera todos os dados do formulário.
         $dataForm = $request->all();
-
+        $dataPessoa['dtnasc'] = date_format( $dtnasc, 'Y-m-d');
         // Recupera o item para editar.
         $profissional = $this->profissional->find($id);
 
         $pessoa = $this->pessoa->find($profissional->id_pessoa);
 
         // Altera o item.
-        $updatePessoa = $pessoa->update($dataForm);
+        $updatePessoa = $pessoa->update($dataPessoa);
         $updateProfissional = $profissional->update($dataForm);
 
         // Verifica se editou.

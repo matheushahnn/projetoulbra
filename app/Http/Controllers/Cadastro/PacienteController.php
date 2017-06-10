@@ -108,13 +108,14 @@ class PacienteController extends Controller
     public function store(PacienteFormRequest $request)
     {
 
+        $dtnasc = date_create_from_format('d/m/Y', $request->input('dtnasc'));
 
         $dataPessoa = Array();
         $dataPaciente = Array();
 
         // Pega os dados para preencher a tabela pessoas.
         $dataPessoa['nome'] = $request->nome;
-        $dataPessoa['dtnasc'] = $request->dtnasc;
+        $dataPessoa['dtnasc'] = date_format( $dtnasc, 'Y-m-d');
         // Início commit
         DB::beginTransaction();
 
@@ -173,15 +174,21 @@ class PacienteController extends Controller
      */
     public function update(PacienteFormRequest $request, $id)
     {
+
+        $dtnasc = date_create_from_format('d/m/Y', $request->input('dtnasc'));
+
+
         // Recupera todos os dados do formulário.
         $dataForm = $request->all();
+        
+        $dataPessoa['dtnasc'] = date_format( $dtnasc, 'Y-m-d');
 
         // Recupera o item para editar.
         $paciente = $this->paciente->find($id);
         $pessoa   = $this->pessoa->find($paciente->id_pessoa);
 
         // Altera pessoa.
-        $updatePessoa = $pessoa->update($dataForm);
+        $updatePessoa = $pessoa->update($dataPessoa);
         // Altera o paciente.
         $update = $paciente->update($dataForm);
 
