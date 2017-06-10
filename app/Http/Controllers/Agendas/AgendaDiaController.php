@@ -34,7 +34,7 @@ class AgendaDiaController extends Controller
 
         $agendas = $this->agendaDia->all();
 
-        $title = "Agenda";
+        $title = "Odonto System | Agenda";
 
         return view('agendaDia.list', compact('title', 'agendas'));
 
@@ -52,7 +52,7 @@ class AgendaDiaController extends Controller
         $data_agenda  = $agendaDia->data;
         $hora_agenda  = $agendaDia->hora;
 
-        $title = "Iniciar atendimento da agenda";
+        $title = "Odonto System | Iniciar atendimento da agenda";
 
         // Muda os status do agendamento.
         $dataAgendaDia = Array(
@@ -179,7 +179,7 @@ class AgendaDiaController extends Controller
     public function create(Request $request)
     {
 
-        $title = "Cadastrar Agendamento do Dia";
+        $title = "Odonto System | Cadastrar Agendamento do Dia";
 
         $agendaDia = $request->all();
 

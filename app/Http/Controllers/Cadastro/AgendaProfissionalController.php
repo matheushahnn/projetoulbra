@@ -46,7 +46,7 @@ class AgendaProfissionalController extends Controller
                         ->get();
 
 
-        $title = "Listagem de agendas";
+        $title = "Odonto System | Listagem de agendas";
 
         return view('agendaProfissional.list', compact('title', 'agendas'));
     }
@@ -58,7 +58,7 @@ class AgendaProfissionalController extends Controller
      */
     public function create()
     {
-        $title = "Cadastrar Agenda Profissional";
+        $title = "Odonto System | Cadastrar Agenda Profissional";
 
         return view('agendaProfissional.create-edit', compact('title'));
     }
@@ -154,7 +154,7 @@ class AgendaProfissionalController extends Controller
         // Profissional.
         $profissional = Profissional::find($agenda_profissional->id_profissional);
         
-        $title = "Editar agenda do profissional: {$profissional->pessoa->nome}";
+        $title = "Odonto System | Editar agenda do profissional: {$profissional->pessoa->nome}";
 
         return view('agendaProfissional.create-edit', compact('title', 'agenda_profissional', 'profissional'));
     }

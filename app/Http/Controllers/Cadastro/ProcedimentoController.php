@@ -30,7 +30,7 @@ class ProcedimentoController extends Controller
         $procedimentos = $this->procedimento->all();
 
 
-        $title = 'Listagem de procedimentos';
+        $title = 'Odonto System | Listagem de procedimentos';
 
         return view('procedimento.list', compact('procedimentos', 'title'));
     }
@@ -39,7 +39,7 @@ class ProcedimentoController extends Controller
 
         $data = $request->all();
         $validator = NULL;
-        $title = 'Listagem de procedimentos';
+        $title = 'Odonto System | Listagem de procedimentos';
 
         if ( empty( $data['descricao_busca'] ) ) {
             
@@ -75,7 +75,7 @@ class ProcedimentoController extends Controller
     public function create()
     {
 
-        $title = "Cadastrar Procedimento";
+        $title = "Odonto System | Cadastrar Procedimento";
 
         return view('procedimento.create-edit', compact('title'));
     }
@@ -124,7 +124,7 @@ class ProcedimentoController extends Controller
         // Recupera procedimento pelo id.
         $procedimento = $this->procedimento->find($id);
 
-        $title = "Editar Procedimento: {$procedimento->descricao}";
+        $title = "Odonto System | Editar Procedimento: {$procedimento->descricao}";
 
         return view('procedimento.create-edit', compact('title', 'procedimento'));
     }

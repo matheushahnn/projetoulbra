@@ -29,7 +29,7 @@ class AtendimentoController extends Controller
                               ->select('p_pac.nome AS nome_paciente', 'p_prof.nome AS nome_profissional', 'a.id', 'a.data', 'a.hora')
                               ->get();
 
-        $title = "Atendimentos";
+        $title = "Odonto System | Atendimentos";
 
         return view('atendimento.list', compact('title', 'atendimentos'));
 
@@ -42,7 +42,7 @@ class AtendimentoController extends Controller
      */
     public function create()
     {
-        $title = "Cadastrar Atendimento";
+        $title = "Odonto System | Cadastrar Atendimento";
 
         $data = Carbon\Carbon::now()->format( 'd/m/Y' );
         $hora = Carbon\Carbon::now()->format( 'H:i' );
@@ -131,7 +131,7 @@ class AtendimentoController extends Controller
         $procedimento_list = $atendimento_query->select('p.descricao',  'p.id', 'pa.quantidade', 'pa.observacao')->get();
         $atendimento       = $atendimento_query->select('a.*', 'p_pac.nome AS nome_paciente', 'p_prof.nome AS nome_profissional')->first();
 
-        $title = "Editando atendimento";
+        $title = "Odonto System | Editando atendimento";
 
         return view('atendimento.create-edit', compact('title', 'atendimento', 'procedimento_list'));
     }

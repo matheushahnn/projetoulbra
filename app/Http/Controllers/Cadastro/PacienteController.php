@@ -30,7 +30,7 @@ class PacienteController extends Controller
         $data = $request->all();
         $validator = NULL;
 
-        $title = "Listagem de pacientes";
+        $title = "Odonto System | Listagem de pacientes";
 
         if ( empty( $data['busca'] ) ) {
             
@@ -80,7 +80,7 @@ class PacienteController extends Controller
                         ->select('pessoas.nome AS nome', 'pessoas.dtnasc', 'pac.ficha_atendimento', 'pac.id')
                         ->get();
 
-        $title = "Listagem de pacientes";
+        $title = "Odonto System | Listagem de pacientes";
 
         return view('paciente.list', compact('title', 'pacientes'));
     }
@@ -93,7 +93,7 @@ class PacienteController extends Controller
      */
     public function create()
     {
-        $title = "Cadastrar Paciente";
+        $title = "Odonto System | Cadastrar Paciente";
 
         return view('paciente.create-edit', compact('title', 'paciente'));
 
@@ -160,7 +160,7 @@ class PacienteController extends Controller
         // Recupera procedimento pelo id.
         $paciente = $this->paciente->find($id);
         $pessoa = $paciente->pessoa;
-        $title = "Editar paciente: {$pessoa->nome}";
+        $title = "Odonto System | Editar paciente: {$pessoa->nome}";
 
         return view('paciente.create-edit', compact('title', 'paciente', 'pessoa'));
     }

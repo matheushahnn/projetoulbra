@@ -57,7 +57,7 @@ class ProfissionalController extends Controller
 
             }
 
-            $title = "Listagem de profissionais";
+            $title = "Odonto System | Listagem de profissionais";
 
             return view('profissional.list', compact('profissionais', 'title'))->withErrors($validator);; 
 
@@ -77,7 +77,7 @@ class ProfissionalController extends Controller
         			            ->select('pessoas.nome AS nome', 'prof.codigo_cadastro', 'prof.id')
         			            ->get();
 
-        $title = "Listagem de profissionais";
+        $title = "Odonto System | Listagem de profissionais";
 
         return view('profissional.list', compact('title', 'profissionais'));
     }
@@ -89,7 +89,7 @@ class ProfissionalController extends Controller
      */
     public function create()
     {
-        $title = "Cadastrar Profissional";
+        $title = "Odonto System | Cadastrar Profissional";
 
         return view('profissional.create-edit', compact('title'));
     }
@@ -158,7 +158,7 @@ class ProfissionalController extends Controller
 			            ->limit(1)
 			            ->first();        
 
-        $title = "Editar profissional: {$profissional->nome}";
+        $title = "Odonto System | Editar profissional: {$profissional->nome}";
 
         return view('profissional.create-edit', compact('title', 'profissional'));
     }

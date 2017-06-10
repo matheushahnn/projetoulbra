@@ -6,7 +6,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-content text-center p-md">
-                    <h2><span class="text-navy">Sistema para Gestão Odontológica</span></h2>
+                    <h2><span class="text-navy">Odonto System</span></h2>
                     </div>
                 </div>
             </div>

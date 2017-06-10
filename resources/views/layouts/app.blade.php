@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ $title or "Software Gestão Odontológica" }}</title>
+    <title>{{ $title or "Odonto System" }}</title>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
