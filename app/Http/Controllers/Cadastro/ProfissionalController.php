@@ -178,6 +178,7 @@ class ProfissionalController extends Controller
         // Recupera todos os dados do formulário.
         $dataForm = $request->all();
         $dataPessoa['dtnasc'] = date_format( $dtnasc, 'Y-m-d');
+        $dataPessoa['nome'] = $request->input('nome');
         // Recupera o item para editar.
         $profissional = $this->profissional->find($id);
 
