@@ -182,6 +182,7 @@ class PacienteController extends Controller
         $dataForm = $request->all();
         
         $dataPessoa['dtnasc'] = date_format( $dtnasc, 'Y-m-d');
+        $dataPessoa['nome'] = $request->input('nome');
 
         // Recupera o item para editar.
         $paciente = $this->paciente->find($id);
