@@ -71,20 +71,20 @@ $( document ).ready(function() {
     // Agenda inline.
     $( '#datepicker_agenda' ).datepicker({});
 
-    $('.mask_numero').keydown( function(evt) {
-    	  var theEvent = evt || window.event;
-			  var key = theEvent.keyCode || theEvent.which;
-			  key = String.fromCharCode( key );
-			  var regex = /[0-9]|\./;
-			  var codigo_permitidos = Array( 8, 9, 35, 36, 37, 38, 39,40,45,46 );
+    // $('.mask_numero').keydown( function(evt) {
+    // 	  var theEvent = evt || window.event;
+			 //  var key = theEvent.keyCode || theEvent.which;
+			 //  key = String.fromCharCode( key );
+			 //  var regex = /[0-9]|\./;
+			 //  var codigo_permitidos = Array( 8, 9, 35, 36, 37, 38, 39,40,45,46 );
 
-			  if ( $.inArray( evt.keyCode, codigo_permitidos ) == 0 ) {
-        	return true;
-        } else if( !regex.test(key) ) {
-			    theEvent.returnValue = false;
-			    if(theEvent.preventDefault) theEvent.preventDefault();
-			  }
-    }	);
+			 //  if ( $.inArray( evt.keyCode, codigo_permitidos ) == 0 ) {
+    //     	return true;
+    //     } else if( !regex.test(key) ) {
+			 //    theEvent.returnValue = false;
+			 //    if(theEvent.preventDefault) theEvent.preventDefault();
+			 //  }
+    // }	);
     $( '.campo_data' ).mask( "99/99/9999" );
     // Expressão regular.
     $( '.campo_hora' ).mask( "AB:CD",  {'translation': {
